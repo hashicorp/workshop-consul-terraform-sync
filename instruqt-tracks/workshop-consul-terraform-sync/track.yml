@@ -879,11 +879,6 @@ challenges:
 
     Congrats! You just migrated to Consul mesh with BIG-IP.
   tabs:
-  - title: Cloud Consoles
-    type: service
-    hostname: workstation
-    path: /
-    port: 80
   - title: Consul
     type: service
     hostname: workstation
@@ -913,6 +908,11 @@ challenges:
   - title: Current lab setup
     type: website
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
+  - title: Cloud Consoles
+    type: service
+    hostname: workstation
+    path: /
+    port: 80
   difficulty: basic
   timelimit: 3000
-checksum: "5283100917308877438"
+checksum: "16815196938771687091"

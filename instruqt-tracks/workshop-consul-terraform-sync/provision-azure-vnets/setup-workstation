@@ -30,9 +30,7 @@ cd /root
 
 #get assets
 git clone https://github.com/hashicorp/field-workshops-consul.git
-cp -r field-workshops-consul/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/terraform .
-cp -r field-workshops-consul/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/apps .
-cp -r field-workshops-consul/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/ambassador .
+cp -r field-workshops-consul/instruqt-tracks/workshop-consul-terraform-sync/assets/terraform .
 rm -rf field-workshops-consul
 
 #ssh agent
