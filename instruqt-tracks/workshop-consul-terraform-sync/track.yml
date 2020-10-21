@@ -76,24 +76,13 @@ challenges:
     Start with Vault. Vault is a secrets management solution that we will use to securely store sensitive information such as usernames, passwords, certificates, and tokens.<br>
 
     In the `Shell` tab run the following commands.
-    ```
-    cd /root/terraform/vault
-    terraform plan
-    nohup terraform apply -auto-approve > /root/terraform/vault/terraform.out &
-    ```
-    Next, provision AKS. This will be the target environment for the microservices based architecture that applications will be refactored to. <br>
-    ```
-    cd /root/terraform/aks
-    terraform plan
-    nohup terraform apply -auto-approve > /root/terraform/aks/terraform.out &
-    ```
-    Last, provision the HashiCorp Consul service. HCS provides Consul as a Managed service on Azure. <br>
+
     ```
     cd /root/terraform/hcs
+    terraform init
     terraform plan
-    nohup terraform apply -auto-approve > /root/terraform/hcs/terraform.out &
+    terraform apply -auto-approve
     ```
-    These services will take some time to provision, you can continue at anytime and they will continue to run.  You will validate and configure them in later chapters, for now take a few moments to review the Terraform code used to provision each of these services.   There are tabs for each of the three components.
   notes:
   - type: text
     contents: |
@@ -915,4 +904,4 @@ challenges:
     port: 80
   difficulty: basic
   timelimit: 3000
-checksum: "16815196938771687091"
+checksum: "1538006038005837704"

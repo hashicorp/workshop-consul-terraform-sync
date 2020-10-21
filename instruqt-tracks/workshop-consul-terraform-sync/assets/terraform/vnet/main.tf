@@ -11,7 +11,7 @@ resource "random_string" "participant" {
 }
 
 resource "azurerm_resource_group" "instruqt" {
-  name     = "instruqt-f5-tf-consul-azure-${random_string.participant.result}"
+  name     = "instruqt-nia-${random_string.participant.result}"
   location = "East US"
 }
 
@@ -28,26 +28,13 @@ module "shared-svcs-network" {
   }
 }
 
-module "legacy-network" {
+module "app-network" {
   source              = "Azure/network/azurerm"
   resource_group_name = azurerm_resource_group.instruqt.name
-  vnet_name           = "legacy-vnet"
+  vnet_name           = "app-vnet"
   address_space       = "10.3.0.0/16"
   subnet_prefixes     = ["10.3.0.0/24"]
   subnet_names        = ["VM"]
-
-  tags = {
-    owner = "instruqt@hashicorp.com"
-  }
-}
-
-module "aks-network" {
-  source              = "Azure/network/azurerm"
-  resource_group_name = azurerm_resource_group.instruqt.name
-  vnet_name           = "aks-vnet"
-  address_space       = "10.4.0.0/16"
-  subnet_prefixes     = ["10.4.0.0/24"]
-  subnet_names        = ["kube"]
 
   tags = {
     owner = "instruqt@hashicorp.com"
@@ -139,44 +126,16 @@ resource "azurerm_network_interface_security_group_association" "bastion" {
   network_security_group_id = azurerm_network_security_group.bastion.id
 }
 
-resource "azurerm_virtual_network_peering" "shared-legacy" {
-  name                      = "SharedToLegacy"
+resource "azurerm_virtual_network_peering" "shared-app" {
+  name                      = "SharedToapp"
   resource_group_name       = azurerm_resource_group.instruqt.name
   virtual_network_name      = "shared-svcs-vnet"
-  remote_virtual_network_id = module.legacy-network.vnet_id
+  remote_virtual_network_id = module.app-network.vnet_id
 }
 
-resource "azurerm_virtual_network_peering" "legacy-shared" {
-  name                      = "LegacyToShared"
+resource "azurerm_virtual_network_peering" "app-shared" {
+  name                      = "appToShared"
   resource_group_name       = azurerm_resource_group.instruqt.name
-  virtual_network_name      = "legacy-vnet"
+  virtual_network_name      = "app-vnet"
   remote_virtual_network_id = module.shared-svcs-network.vnet_id
-}
-
-resource "azurerm_virtual_network_peering" "shared-aks" {
-  name                      = "SharedToAKS"
-  resource_group_name       = azurerm_resource_group.instruqt.name
-  virtual_network_name      = "shared-svcs-vnet"
-  remote_virtual_network_id = module.aks-network.vnet_id
-}
-
-resource "azurerm_virtual_network_peering" "aks-shared" {
-  name                      = "AKSToShared"
-  resource_group_name       = azurerm_resource_group.instruqt.name
-  virtual_network_name      = "aks-vnet"
-  remote_virtual_network_id = module.shared-svcs-network.vnet_id
-}
-
-resource "azurerm_virtual_network_peering" "aks-legacy" {
-  name                      = "AksToLegacy"
-  resource_group_name       = azurerm_resource_group.instruqt.name
-  virtual_network_name      = "aks-vnet"
-  remote_virtual_network_id = module.legacy-network.vnet_id
-}
-
-resource "azurerm_virtual_network_peering" "legacy-aks" {
-  name                      = "LegacyToAKS"
-  resource_group_name       = azurerm_resource_group.instruqt.name
-  virtual_network_name      = "legacy-vnet"
-  remote_virtual_network_id = module.aks-network.vnet_id
 }

@@ -73,34 +73,18 @@ data "azurerm_virtual_network" "hcs" {
   resource_group_name = "${data.terraform_remote_state.vnet.outputs.resource_group_name}-mrg-hcs"
 }
 
-resource "azurerm_virtual_network_peering" "hcs-legacy" {
+resource "azurerm_virtual_network_peering" "hcs-app" {
   depends_on                = [azurerm_managed_application.hcs]
-  name                      = "HCSToLegacy"
+  name                      = "HCSToapp"
   resource_group_name       = "${data.terraform_remote_state.vnet.outputs.resource_group_name}-mrg-hcs"
   virtual_network_name      = "${lookup(azurerm_managed_application.hcs.outputs, "vnet_name")}-vnet"
-  remote_virtual_network_id = data.terraform_remote_state.vnet.outputs.legacy_vnet
+  remote_virtual_network_id = data.terraform_remote_state.vnet.outputs.app_vnet
 }
 
-resource "azurerm_virtual_network_peering" "legacy-hcs" {
+resource "azurerm_virtual_network_peering" "app-hcs" {
   depends_on                = [azurerm_managed_application.hcs]
-  name                      = "LegacyToHCS"
+  name                      = "appToHCS"
   resource_group_name       = data.terraform_remote_state.vnet.outputs.resource_group_name
-  virtual_network_name      = "legacy-vnet"
-  remote_virtual_network_id = data.azurerm_virtual_network.hcs.id
-}
-
-resource "azurerm_virtual_network_peering" "hcs-aks" {
-  depends_on                = [azurerm_managed_application.hcs]
-  name                      = "HCSToAKS"
-  resource_group_name       = "${data.terraform_remote_state.vnet.outputs.resource_group_name}-mrg-hcs"
-  virtual_network_name      = "${lookup(azurerm_managed_application.hcs.outputs, "vnet_name")}-vnet"
-  remote_virtual_network_id = data.terraform_remote_state.vnet.outputs.aks_vnet
-}
-
-resource "azurerm_virtual_network_peering" "aks-hcs" {
-  depends_on                = [azurerm_managed_application.hcs]
-  name                      = "AKSToHCS"
-  resource_group_name       = data.terraform_remote_state.vnet.outputs.resource_group_name
-  virtual_network_name      = "aks-vnet"
+  virtual_network_name      = "app-vnet"
   remote_virtual_network_id = data.azurerm_virtual_network.hcs.id
 }

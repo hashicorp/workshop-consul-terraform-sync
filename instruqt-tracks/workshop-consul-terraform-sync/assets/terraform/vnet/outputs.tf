@@ -14,20 +14,12 @@ output "shared_svcs_subnets" {
   value = module.shared-svcs-network.vnet_subnets
 }
 
-output "legacy_vnet" {
-  value = module.legacy-network.vnet_id
+output "app_vnet" {
+  value = module.app-network.vnet_id
 }
 
-output "legacy_subnets" {
-  value = module.legacy-network.vnet_subnets
-}
-
-output "aks_vnet" {
-  value = module.aks-network.vnet_id
-}
-
-output "aks_subnets" {
-  value = module.aks-network.vnet_subnets
+output "app_subnets" {
+  value = module.app-network.vnet_subnets
 }
 
 output "bastion_ip" {
