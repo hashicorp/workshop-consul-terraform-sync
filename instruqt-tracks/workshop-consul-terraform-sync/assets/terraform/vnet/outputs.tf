@@ -22,6 +22,10 @@ output "app_subnets" {
   value = module.app-network.vnet_subnets
 }
 
+output "legacy_subnets" {
+  value = module.legacy-network.vnet_subnets
+}
+
 output "bastion_ip" {
   value = azurerm_public_ip.bastion.ip_address
 }

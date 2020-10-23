@@ -40,7 +40,7 @@ echo "export CONSUL_HTTP_ADDR=${consul_lb}" >> ~/.bashrc
 endpoint=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output --state ../vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulConfigFile | base64 -d | jq -r .retry_join[0])
 consulconfig=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulConfigFile | base64 -d)
 ca_cert=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulCaFile | base64 -d)
-token=$(vault kv get -field=master_token secret/consul)
+# token=$(vault kv get -field=master_token secret/consul)
 
 cat << EOF > /root/terraform/legacy/terraform.tfvars
 ssh_public_key = "$(cat ~/.ssh/id_rsa.pub)"
@@ -51,9 +51,6 @@ EOT
 ca_cert = <<-EOT
 ${ca_cert}
 EOT
-consul_token = "${token}"
 EOF
-
-
 
 exit 0
