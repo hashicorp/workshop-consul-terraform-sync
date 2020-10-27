@@ -91,6 +91,14 @@ cat << EOF > /etc/consul.d/zz_override.hcl
 data_dir = "/opt/consul"
 ui = true
 ca_file = "/etc/consul.d/ca.pem"
+acl = {
+  tokens = {
+    default = "${consul_token}"
+  }
+  enabled = true
+  default_policy = "deny"
+  enable_token_persistence = true
+}
 EOF
 
 

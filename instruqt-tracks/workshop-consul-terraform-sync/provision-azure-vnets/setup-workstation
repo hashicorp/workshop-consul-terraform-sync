@@ -10,6 +10,15 @@ mv consul /usr/local/bin/consul
 rm -f *.zip
 cd /root
 
+#install vault
+cd /tmp
+echo "installing vault..."
+curl -O https://releases.hashicorp.com/vault/1.4.3/vault_1.4.3_linux_amd64.zip
+unzip *.zip
+mv vault /usr/local/bin/vault
+rm -f *.zip
+cd /root
+
 #install terraform
 cd /tmp
 echo "installing terraform..."
