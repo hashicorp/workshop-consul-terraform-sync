@@ -168,7 +168,7 @@ challenges:
   difficulty: basic
   timelimit: 3000
 - slug: validate-hcs
-  id: db8kbw94rm4u
+  id: yrgzj00clhig
   type: challenge
   title: Validate HCS
   teaser: Verify Vault, HCS, and Consul are operational
@@ -628,7 +628,7 @@ challenges:
   difficulty: basic
   timelimit: 3000
 - slug: deploy-consul-in-aks
-  id: p3pjksgqtk1q
+  id: xekx9xiqzqdi
   type: challenge
   title: Deploy Consul in AKS
   teaser: Installing Consul in Kubernetes based environments is easy!
@@ -724,7 +724,7 @@ challenges:
   difficulty: basic
   timelimit: 3000
 - slug: deploy-app-in-k8s
-  id: yuao9q59nzyy
+  id: fh0avrskt1e0
   type: challenge
   title: Deploy App in k8s
   teaser: Deploy a microservices based application into the service mesh.
@@ -830,7 +830,7 @@ challenges:
   difficulty: basic
   timelimit: 3000
 - slug: test-app-in-k8s
-  id: kyz5qg8itejy
+  id: k44v1d2ymz36
   type: challenge
   title: Test App in k8s
   teaser: Access your Consul service mesh with BIG-IP
@@ -904,4 +904,4 @@ challenges:
     port: 80
   difficulty: basic
   timelimit: 3000
-checksum: "1538006038005837704"
+checksum: "9191680768376970482"
