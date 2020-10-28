@@ -105,7 +105,7 @@ resource "azurerm_network_interface" "ext-nic" {
 
   ip_configuration {
     name                          = "primary"
-    subnet_id                     = data.terraform_remote_state.vnet.outputs.app_subnets[0]
+    subnet_id                     = data.terraform_remote_state.vnet.outputs.legacy_subnets[0]
     private_ip_address_allocation = "Dynamic"
     primary                       = true
     public_ip_address_id          = azurerm_public_ip.sip_public_ip.id

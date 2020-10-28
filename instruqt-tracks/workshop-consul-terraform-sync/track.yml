@@ -70,19 +70,14 @@ challenges:
   type: challenge
   title: Provision Core Services
   teaser: Provision Vault, HCS, and AKS using Terraform
-  assignment: |-
-    You will use Terraform to provision these services in the background while you set up Consul in the next few assignments. <br>
-
-    Start with Vault. Vault is a secrets management solution that we will use to securely store sensitive information such as usernames, passwords, certificates, and tokens.<br>
-
-    In the `Shell` tab run the following commands.
-
-    ```
-    cd /root/terraform/hcs
-    terraform init
-    terraform plan
-    terraform apply -auto-approve
-    ```
+  assignment: "You will use Terraform to provision these services in the background
+    while you set up Consul in the next few assignments. <br>\n\nStart with Vault.
+    Vault is a secrets management solution that we will use to securely store sensitive
+    information such as usernames, passwords, certificates, and tokens.<br>\n\nIn
+    the `Shell` tab run the following commands.\n\n```\ncd /root/terraform/vault\nterraform
+    plan\nterraform apply -auto-approve\n```\n\nNow provision HCS:\n  \nIn the `Shell`
+    tab run the following commands.\n\n```\ncd /root/terraform/hcs\nterraform plan\nterraform
+    apply -auto-approve  > /root/terraform/hcs/terraform.out &\n```"
   notes:
   - type: text
     contents: |
@@ -141,10 +136,6 @@ challenges:
     ```
     cat /root/terraform/hcs/terraform.out
     ```
-    Montior AKS provisioning
-    ```
-    cat /root/terraform/aks/terraform.out
-    ```
   notes:
   - type: text
     contents: |
@@ -168,7 +159,7 @@ challenges:
   difficulty: basic
   timelimit: 3000
 - slug: validate-hcs
-  id: db8kbw94rm4u
+  id: yrgzj00clhig
   type: challenge
   title: Validate HCS
   teaser: Verify Vault, HCS, and Consul are operational
@@ -628,7 +619,7 @@ challenges:
   difficulty: basic
   timelimit: 3000
 - slug: deploy-consul-in-aks
-  id: p3pjksgqtk1q
+  id: xekx9xiqzqdi
   type: challenge
   title: Deploy Consul in AKS
   teaser: Installing Consul in Kubernetes based environments is easy!
@@ -724,7 +715,7 @@ challenges:
   difficulty: basic
   timelimit: 3000
 - slug: deploy-app-in-k8s
-  id: yuao9q59nzyy
+  id: fh0avrskt1e0
   type: challenge
   title: Deploy App in k8s
   teaser: Deploy a microservices based application into the service mesh.
@@ -830,7 +821,7 @@ challenges:
   difficulty: basic
   timelimit: 3000
 - slug: test-app-in-k8s
-  id: kyz5qg8itejy
+  id: k44v1d2ymz36
   type: challenge
   title: Test App in k8s
   teaser: Access your Consul service mesh with BIG-IP
@@ -904,4 +895,4 @@ challenges:
     port: 80
   difficulty: basic
   timelimit: 3000
-checksum: "1538006038005837704"
+checksum: "16343130625158073539"

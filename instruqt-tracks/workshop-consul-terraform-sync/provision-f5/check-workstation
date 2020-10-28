@@ -14,13 +14,14 @@ if [ "${status}" != "Succeeded" ] ; then
   fail-message "Vault instance is not provisioned. Wait a few moments and try again. Current state is: ${status}"
   exit 1
 fi
-echo "Checking aks instance"
-status=$(az aks list -g $rg | jq -r  '.[0].provisioningState')
-echo $status
-if [ "${status}" != "Succeeded" ] ; then
-  fail-message "AKS cluster is not provisioned. Wait a few moments and try again. Current state is: ${status}"
-  exit 1
-fi
+
+#echo "Checking aks instance"
+#status=$(az aks list -g $rg | jq -r  '.[0].provisioningState')
+#echo $status
+#if [ "${status}" != "Succeeded" ] ; then
+#  fail-message "AKS cluster is not provisioned. Wait a few moments and try again. Current state is: ${status}"
+#  exit 1
+#fi
 
 # this is broken for now
 #echo "Checking HCS cluster"
