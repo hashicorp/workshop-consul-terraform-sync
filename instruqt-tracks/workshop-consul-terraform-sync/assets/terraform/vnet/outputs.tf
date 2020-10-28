@@ -14,6 +14,10 @@ output "shared_svcs_subnets" {
   value = module.shared-svcs-network.vnet_subnets
 }
 
+output "legacy_subnets" {
+  value = module.legacy-network.vnet_subnets
+}
+
 output "app_vnet" {
   value = module.app-network.vnet_id
 }
