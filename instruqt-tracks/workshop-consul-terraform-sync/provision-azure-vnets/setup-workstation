@@ -32,7 +32,8 @@ cd /root
 git clone https://github.com/hashicorp/workshop-consul-terraform-sync.git
 cp -r workshop-consul-terraform-sync/instruqt-tracks/workshop-consul-terraform-sync/assets/terraform /root/terraform
 rm -rf workshop-consul-terraform-sync/
-cd terraform/vnet
+cd /root/terraform/vnet
+terraform init
 
 #ssh agent
 cat << EOF > ~/.ssh/config
