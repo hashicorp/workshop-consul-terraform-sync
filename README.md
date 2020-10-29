@@ -1,1 +1,1 @@
-# workshop-consul-terraform0sync
+# workshop-consul-terraform-sync
