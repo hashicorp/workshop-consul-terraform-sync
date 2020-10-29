@@ -12,7 +12,7 @@
         "class": "Application",
         "WAF_Policy": {
           "class": "WAF_Policy",
-          "url": "https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/terraform/app/as3/templates/asm_policy.xml",
+          "url": "https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/terraform/app/as3/templates/asm_policy.xml",
           "ignoreChanges": false,
           "enforcementMode": "blocking"
         },
