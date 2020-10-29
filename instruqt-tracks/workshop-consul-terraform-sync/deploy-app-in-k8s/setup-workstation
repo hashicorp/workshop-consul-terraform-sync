@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #temp fix
-cd /root/terraform/legacy/as3
+cd /root/terraform/app/as3
 terraform destroy -auto-approve
 
 cd /root/terraform/bigip
