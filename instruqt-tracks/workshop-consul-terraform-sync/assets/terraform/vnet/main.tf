@@ -28,19 +28,6 @@ module "shared-svcs-network" {
   }
 }
 
-module "legacy-network" {
-  source              = "Azure/network/azurerm"
-  resource_group_name = azurerm_resource_group.instruqt.name
-  vnet_name           = "legacy-vnet"
-  address_space       = "10.3.0.0/16"
-  subnet_prefixes     = ["10.3.0.0/24"]
-  subnet_names        = ["VM"]
-
-  tags = {
-    owner = "instruqt@hashicorp.com"
-  }
-}
-
 module "app-network" {
   source              = "Azure/network/azurerm"
   resource_group_name = azurerm_resource_group.instruqt.name

@@ -30,6 +30,6 @@ data "template_file" "virtualserverAS3" {
   }
 }
 
-resource "bigip_as3" "legacy-app" {
+resource "bigip_as3" "app" {
   as3_json = data.template_file.virtualserverAS3.rendered
 }

@@ -2,15 +2,15 @@
 # This is the setup script for the workstation container. Use it to set the stage for your terraform training, demo, or lab.
 set -e
 
-set-workdir /root/terraform/legacy
+set-workdir /root/terraform/app
 
 cd /root/terraform/bigip
 terraform output > /info.txt
 
-cd /root/terraform/legacy/as3
+cd /root/terraform/app/as3
 terraform init
 
-cd /root/terraform/legacy
+cd /root/terraform/app
 terraform init
 
 # Allow instruqt time to do its thing
@@ -42,7 +42,7 @@ consulconfig=$(az resource show --ids "/subscriptions/$(az account show | jq -r 
 ca_cert=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulCaFile | base64 -d)
 token=$(vault kv get -field=master_token secret/consul)
 
-cat << EOF > /root/terraform/legacy/terraform.tfvars
+cat << EOF > /root/terraform/app/terraform.tfvars
 ssh_public_key = "$(cat ~/.ssh/id_rsa.pub)"
 endpoint = "${endpoint}"
 consulconfig = <<-EOT

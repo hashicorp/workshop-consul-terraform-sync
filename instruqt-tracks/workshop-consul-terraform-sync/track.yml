@@ -29,6 +29,7 @@ challenges:
 
     In the `Shell` tab run the following commands.
     ```
+    cd /root/terraform/vnet
     terraform plan
     terraform apply -auto-approve
     ```
@@ -37,7 +38,7 @@ challenges:
     ```
     hcs-vnet: 10.0.0.0/16
     shared-svcs-vnet: 10.2.0.0/16
-    legacy-vnet: 10.3.0.0/16
+    app-vnet: 10.3.0.0/16
     aks-vnet: 10.4.0.0/16
     ```
 
@@ -274,10 +275,10 @@ challenges:
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/provision-core-services.html
   difficulty: basic
   timelimit: 3000
-- slug: deploy-legacy-environments
+- slug: deploy-app-environments
   id: k0reagnnfzuc
   type: challenge
-  title: Deploy Legacy environments
+  title: Deploy App environments
   teaser: Migrate an existing VM based application to the cloud.
   assignment: |2-
 
@@ -301,17 +302,17 @@ challenges:
 
     For example, it is no longer required to manually manage pool members on the F5 appliances. Instead, VIPs can be configured to populate backend pool members by monitoring services in Consul. Whenever the application scales up, down, fails a check, or moves the BIG-IP will automatically update it's configuration. <br>
 
-    VIP deployment is also automated by way of an AS3 declaration which is deployed via Terraform. The AS3 declaration for the legacy application defines a VIP, a corresponding node pool which will be dynamically populated by Consul, and a WAF policy that helps protect the application from bad actors.
+    VIP deployment is also automated by way of an AS3 declaration which is deployed via Terraform. The AS3 declaration for the application defines a VIP, a corresponding node pool which will be dynamically populated by Consul, and a WAF policy that helps protect the application from bad actors.
 
     Inspect the AS3 declaration.
     ```
-    cd /root/terraform/legacy/as3
+    cd /root/terraform/app/as3
     cat templates/as3_declaration.json
     ```
 
     Provision the VIP using Terraform.
     ```
-    cd /root/terraform/legacy/as3
+    cd /root/terraform/app/as3
     terraform plan
     terraform apply -auto-approve
     ```
@@ -334,7 +335,7 @@ challenges:
   - title: Terraform Code
     type: code
     hostname: workstation
-    path: /root/terraform/legacy
+    path: /root/terraform/app
   - title: App Access Info
     type: code
     hostname: workstation
@@ -362,11 +363,11 @@ challenges:
     port: 8080
   difficulty: basic
   timelimit: 3000
-- slug: review-legacy-environment
+- slug: review-app-environment
   id: hbbtrye3yi1b
   type: challenge
-  title: Review legacy environment
-  teaser: Review the components of the legacy application
+  title: Review app environment
+  teaser: Review the components of the app application
   assignment: |-
     The VM based application is now configured as part of a VM scale set on Azure.  One of the first challenges that comes up is that instances of the scale set will be provisioned with dynamic IP addresses. <br>
 
@@ -506,7 +507,7 @@ challenges:
   - title: Terraform Code
     type: code
     hostname: workstation
-    path: /root/terraform/legacy
+    path: /root/terraform/app
   - title: Current lab setup
     type: website
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
@@ -518,7 +519,7 @@ challenges:
   title: Scale the application
   teaser: Let Consul take care of routine adds/moves/changes of services instances.
   assignment: |-
-    Now let's re-run the Terraform code for the legacy application, but pass in some new variables for the scale parameters.
+    Now let's re-run the Terraform code for the app application, but pass in some new variables for the scale parameters.
 
     ```
     terraform apply -var app_count=3 -var web_count=3 -auto-approve
@@ -555,7 +556,7 @@ challenges:
     Re-run Terraform, and monitor the various integration points once again. We'll do so in the background so that you can move on whenever you're ready. <br>
 
     ```
-    nohup terraform apply -var app_count=1 -var web_count=1 -auto-approve > /root/terraform/legacy/scaledown.out &
+    nohup terraform apply -var app_count=1 -var web_count=1 -auto-approve > /root/terraform/app/scaledown.out &
     ```
 
     **Some other things you can try:**
@@ -615,7 +616,7 @@ challenges:
   - title: Terraform Code
     type: code
     hostname: workstation
-    path: /root/terraform/legacy
+    path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
 - slug: deploy-consul-in-aks
@@ -895,4 +896,4 @@ challenges:
     port: 80
   difficulty: basic
   timelimit: 3000
-checksum: "15453397711914442546"
+checksum: "13148579091527236259"
