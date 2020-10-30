@@ -5,8 +5,8 @@
 #set-workdir /root/cts
 #
 ##creds
-#vault login -method=userpass username=operations password=Password1
-#export CONSUL_HTTP_TOKEN=$(vault read -field token consul/creds/ops)
+vault login -method=userpass username=operations password=Password1
+export CONSUL_HTTP_TOKEN=$(vault read -field token consul/creds/ops)
 #
 ##install consul-terraform-sync
 #cd /tmp
@@ -17,9 +17,9 @@
 #rm -rf *.zip
 #cd /root
 #
-#consulconfig=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulConfigFile | base64 -d)
-#ca_cert=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulCaFile | base64 -d)
-#token=$(vault kv get -field=master_token secret/consul)
+consulconfig=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulConfigFile | base64 -d)
+ca_cert=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulCaFile | base64 -d)
+token=$(vault kv get -field=master_token secret/consul)
 #
 #cat << EOF > /root/cts/ca.pem
 #${ca_cert}

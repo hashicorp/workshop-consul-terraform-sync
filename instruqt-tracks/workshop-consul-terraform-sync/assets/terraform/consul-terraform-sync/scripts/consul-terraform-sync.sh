@@ -21,7 +21,7 @@ curl --silent --remote-name https://releases.hashicorp.com/consul-terraform-sync
 
 #Install consul-terraform-sync
 unzip *.zip
-sudo chown root:root consul
+sudo chown root:root consul-terraform-sync
 sudo mv consul-terraform-sync /usr/local/bin/
 
 #Create Consul Terraorm Sync User
