@@ -1,4 +1,7 @@
-# consul-terraform-sync_0.1.0-techpreview1_linux_amd64.zip
+provider "azurerm" {
+  version = "=2.0.0"
+  features {}
+}
 
 data "terraform_remote_state" "vnet" {
   backend = "local"
@@ -110,7 +113,7 @@ resource "azurerm_network_security_group" "cts-sg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
-  
+
   security_rule {
     name                       = "SSH"
     priority                   = 1004
