@@ -77,7 +77,7 @@ challenges:
     information such as usernames, passwords, certificates, and tokens.<br>\n\nIn
     the `Shell` tab run the following commands.\n\n```\ncd /root/terraform/vault\nterraform
     plan\nterraform apply -auto-approve\n```\n\nNow provision HCS:\n  \nIn the `Shell`
-    tab run the following commands.\n\n```\ncd /root/terraform/hcs\nterraform plan\nterraform
+    tab run the following commands.\n\n```\ncd /root/terraform/hcs\nterraform plan\nnohup terraform
     apply -auto-approve  > /root/terraform/hcs/terraform.out &\n```"
   notes:
   - type: text
@@ -769,4 +769,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "5354962378547649147"
+checksum: "6441168964120387373"
