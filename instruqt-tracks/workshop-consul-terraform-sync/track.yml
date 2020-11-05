@@ -77,8 +77,8 @@ challenges:
     information such as usernames, passwords, certificates, and tokens.<br>\n\nIn
     the `Shell` tab run the following commands.\n\n```\ncd /root/terraform/vault\nterraform
     plan\nterraform apply -auto-approve\n```\n\nNow provision HCS:\n  \nIn the `Shell`
-    tab run the following commands.\n\n```\ncd /root/terraform/hcs\nterraform plan\nnohup terraform
-    apply -auto-approve  > /root/terraform/hcs/terraform.out &\n```"
+    tab run the following commands.\n\n```\ncd /root/terraform/hcs\nterraform plan\nnohup
+    terraform apply -auto-approve  > /root/terraform/hcs/terraform.out &\n```"
   notes:
   - type: text
     contents: |
@@ -280,48 +280,23 @@ challenges:
   type: challenge
   title: Deploy App environments
   teaser: Migrate an existing VM based application to the cloud.
-  assignment: |2-
-
-    In this assignment we will be deploying the current application into Azure based VM's. <br>
-
-    As part of the cloud migration, the VM's will also be configured to run a Consul agent that registers these services with Consul.  This will make it easy to refactor the application, as the application is no longer dependent upon static IP addresses which are hardcoded into configuration and application code. <br>
-
-    This also means that IP addresses no longer have to be known before provisioning can occur, thus, decoupling steps in the provisioning workflow.
-
-
-    Review the code in the `Terraform Code` this defines the VMSS for the web and app tiers of the application.
-
-    Begin provisioning the application in the background.
-
-    ```
-    terraform plan
-    nohup terraform apply -auto-approve > deploy_app.log 2>&1 &
-    ```
-
-    By registering nodes and services in Consul other services can easily discover their status and location. <br>
-
-    For example, it is no longer required to manually manage pool members on the F5 appliances. Instead, VIPs can be configured to populate backend pool members by monitoring services in Consul. Whenever the application scales up, down, fails a check, or moves the BIG-IP will automatically update it's configuration. <br>
-
-    VIP deployment is also automated by way of an AS3 declaration which is deployed via Terraform. The AS3 declaration for the application defines a VIP, a corresponding node pool which will be dynamically populated by Consul, and a WAF policy that helps protect the application from bad actors.
-
-    Inspect the AS3 declaration.
-    ```
-    cd /root/terraform/app/as3
-    cat templates/as3_declaration.json
-    ```
-
-    Provision the VIP using Terraform.
-    ```
-    cd /root/terraform/app/as3
-    terraform plan
-    terraform apply -auto-approve
-    ```
-
-    The application is now being migrated to the cloud!!! You can monitor the status of your application via Consul. <br>
-
-    Once everything looks good you can visit the application in the `App` tab. You may need to hit the refresh button **within** that tab. <br>
-
-    You will explore the environment in more detail in the next challange. <br>
+  assignment: "\nIn this assignment we will be deploying the current application into
+    Azure based VM's. <br>\n\nAs part of the cloud migration, the VM's will also be
+    configured to run a Consul agent that registers these services with Consul.  This
+    will make it easy to refactor the application, as the application is no longer
+    dependent upon static IP addresses which are hardcoded into configuration and
+    application code. <br>\n\nThis also means that IP addresses no longer have to
+    be known before provisioning can occur, thus, decoupling steps in the provisioning
+    workflow.\n\n\nReview the code in the `Terraform Code` this defines the VMSS for
+    the web and app tiers of the application.\n\nBegin provisioning the application
+    in the background.\n\n```\nterraform plan\nnohup terraform apply -auto-approve
+    > deploy_app.log 2>&1 &\n```\n\nBy registering nodes and services in Consul other
+    services can easily discover their status and location. <br>\n\nYou can now monitor
+    the progress of the App deployment by watching the `Consul` tab as the new App
+    and Web services auto-register.\n\nYou could also watch the output of the app
+    deployment log by executing the following command in the `Shell` tab \n```\ntail
+    -f /root/terraform/app/deploy_app.log\n```\n\n You will explore the environment
+    in more detail in the next challange. <br>"
   notes:
   - type: text
     contents: |
@@ -361,6 +336,165 @@ challenges:
     hostname: workstation
     path: /ui
     port: 8080
+  difficulty: basic
+  timelimit: 3000
+- slug: install-consul-terraform-sync
+  id: jskeddctb13s
+  type: challenge
+  title: Deploy 'Consul Terraform Sync'
+  teaser: Now we are going install Consul Terraform Sync
+  assignment: |2-
+
+    ```
+    cd /root/terraform/consul-terraform-sync
+    terraform init
+    terraform plan
+    terraform apply -auto-approve
+    ```
+
+    When complete, connect to the image
+    ```
+    consul_terraform_sync=$(curl -s $CONSUL_HTTP_ADDR/v1/catalog/node/consul-terraform-sync-000000 | jq -r '.Node.Address')
+    ssh -q -A -J azure-user@$bastion_ip azure-user@$consul_terraform_sync
+    ```
+
+    Move to the next assignment when they are ready.
+  notes:
+  - type: text
+    contents: |
+      HashiCorp maintains an official helm chart, which makes installing Consul in k8s easy!
+  tabs:
+  - title: Cloud Consoles
+    type: service
+    hostname: workstation
+    path: /
+    port: 80
+  - title: Current lab setup
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
+  - title: Consul
+    type: service
+    hostname: workstation
+    path: /
+    port: 8500
+  - title: Shell
+    type: terminal
+    hostname: workstation
+  - title: App
+    type: service
+    hostname: workstation
+    path: /ui
+    port: 8080
+  - title: App Access Info
+    type: code
+    hostname: workstation
+    path: /info.txt
+  difficulty: basic
+  timelimit: 3000
+- slug: deploy-service-to-bigip
+  id: npqma05puqay
+  type: challenge
+  title: Deploy Service to BIG-IP
+  teaser: Deploy Service to BIG-IP via Consul Terraform Sync.
+  assignment: |-
+    The AS3 declaration from the prior exercise has been removed for you.
+    You will now transition the application to AKS. <br>
+
+    With AKS connected to HCS you can deploy your application pods.
+    Consul will auto inject sidecars for each pod.
+
+    Deploy the Pods and wait until they are ready.
+
+    ```
+    kubectl apply -f /root/apps
+    kubectl get pods
+    ```
+
+    Now you need to expose the Web application to the outside world.
+    You will first set up an Ambassador mapping, and then expose Ambassador to the outside world with annotations for BIG-IP
+
+    ```
+    cat <<EOF | kubectl apply -f -
+    ---
+    apiVersion: getambassador.io/v2
+    kind: Mapping
+    metadata:
+      name: consul-web-mapping-tls
+    spec:
+      prefix: /
+      service: web-sidecar-proxy
+      resolver: consul-east-us
+      tls: ambassador-consul
+      load_balancer:
+        policy: round_robin
+    EOF
+    ```
+
+    Annotate the Ambassador service.
+
+    ```
+    cat /root/ambassador/aes-service.yaml
+    kubectl apply -f /root/ambassador/aes-service.yaml
+    ```
+
+    Deploy the AS3 declaration.
+
+    ```
+    cat /root/ambassador/f5-ambassador.yaml
+    kubectl apply -f /root/ambassador/f5-ambassador.yaml
+    ```
+
+    Your application should now be available over BIG-IP. Test it below.
+
+    ```
+    app=$(terraform output app_url)
+    echo $app
+    curl -sv $app
+    ```
+
+    You should see the following error: `upstream connect error or disconnect/reset before headers. reset reason: connection termination` <br>
+    We need to configure mTLS between the applications to resolve this error. Consul intentions for mTLS are deny by default. <br>
+
+    You will perform this task in the next assignment.
+  notes:
+  - type: text
+    contents: |
+      Consul works equally well in public, private, virtual, physical, or microservices based environments.
+  tabs:
+  - title: Cloud Consoles
+    type: service
+    hostname: workstation
+    path: /
+    port: 80
+  - title: Consul
+    type: service
+    hostname: workstation
+    path: /
+    port: 8500
+  - title: Vault
+    type: service
+    hostname: workstation
+    path: /
+    port: 8200
+  - title: Shell
+    type: terminal
+    hostname: workstation
+  - title: Apps
+    type: code
+    hostname: workstation
+    path: /root/apps
+  - title: App
+    type: service
+    hostname: workstation
+    path: /ui
+    port: 8080
+  - title: App Access Info
+    type: code
+    hostname: workstation
+    path: /info.txt
+  - title: Current lab setup
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
   difficulty: basic
   timelimit: 3000
 - slug: review-app-environment
@@ -513,156 +647,6 @@ challenges:
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
   difficulty: basic
   timelimit: 3000
-- slug: install-consul-terraform-sync
-  id: jskeddctb13s
-  type: challenge
-  title: Deploy 'Consul Terraform Sync'
-  teaser: Now we are going install Consul Terraform Sync
-  assignment: |2-
-
-    ```
-    consul-terraform-sync
-    ```
-
-    Move to the next assignment when they are ready.
-  notes:
-  - type: text
-    contents: |
-      HashiCorp maintains an official helm chart, which makes installing Consul in k8s easy!
-  tabs:
-  - title: Cloud Consoles
-    type: service
-    hostname: workstation
-    path: /
-    port: 80
-  - title: Current lab setup
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
-  - title: Consul
-    type: service
-    hostname: workstation
-    path: /
-    port: 8500
-  - title: Shell
-    type: terminal
-    hostname: workstation
-  - title: App
-    type: service
-    hostname: workstation
-    path: /ui
-    port: 8080
-  - title: App Access Info
-    type: code
-    hostname: workstation
-    path: /info.txt
-  difficulty: basic
-  timelimit: 3000
-- slug: deploy-service-to-bigip
-  id: npqma05puqay
-  type: challenge
-  title: Deploy Service to BIG-IP
-  teaser: Deploy Service to BIG-IP via Consul Terraform Sync.
-  assignment: |-
-    The AS3 declaration from the prior exercise has been removed for you.
-    You will now transition the application to AKS. <br>
-
-    With AKS connected to HCS you can deploy your application pods.
-    Consul will auto inject sidecars for each pod.
-
-    Deploy the Pods and wait until they are ready.
-
-    ```
-    kubectl apply -f /root/apps
-    kubectl get pods
-    ```
-
-    Now you need to expose the Web application to the outside world.
-    You will first set up an Ambassador mapping, and then expose Ambassador to the outside world with annotations for BIG-IP
-
-    ```
-    cat <<EOF | kubectl apply -f -
-    ---
-    apiVersion: getambassador.io/v2
-    kind: Mapping
-    metadata:
-      name: consul-web-mapping-tls
-    spec:
-      prefix: /
-      service: web-sidecar-proxy
-      resolver: consul-east-us
-      tls: ambassador-consul
-      load_balancer:
-        policy: round_robin
-    EOF
-    ```
-
-    Annotate the Ambassador service.
-
-    ```
-    cat /root/ambassador/aes-service.yaml
-    kubectl apply -f /root/ambassador/aes-service.yaml
-    ```
-
-    Deploy the AS3 declaration.
-
-    ```
-    cat /root/ambassador/f5-ambassador.yaml
-    kubectl apply -f /root/ambassador/f5-ambassador.yaml
-    ```
-
-    Your application should now be available over BIG-IP. Test it below.
-
-    ```
-    app=$(terraform output app_url)
-    echo $app
-    curl -sv $app
-    ```
-
-    You should see the following error: `upstream connect error or disconnect/reset before headers. reset reason: connection termination` <br>
-    We need to configure mTLS between the applications to resolve this error. Consul intentions for mTLS are deny by default. <br>
-
-    You will perform this task in the next assignment.
-  notes:
-  - type: text
-    contents: |
-      Consul works equally well in public, private, virtual, physical, or microservices based environments.
-  tabs:
-  - title: Cloud Consoles
-    type: service
-    hostname: workstation
-    path: /
-    port: 80
-  - title: Consul
-    type: service
-    hostname: workstation
-    path: /
-    port: 8500
-  - title: Vault
-    type: service
-    hostname: workstation
-    path: /
-    port: 8200
-  - title: Shell
-    type: terminal
-    hostname: workstation
-  - title: Apps
-    type: code
-    hostname: workstation
-    path: /root/apps
-  - title: App
-    type: service
-    hostname: workstation
-    path: /ui
-    port: 8080
-  - title: App Access Info
-    type: code
-    hostname: workstation
-    path: /info.txt
-  - title: Current lab setup
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
-  difficulty: basic
-  timelimit: 3000
 - slug: scale-the-application
   id: tjlwihpjo0s9
   type: challenge
@@ -769,4 +753,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "6441168964120387373"
+checksum: "6439382993187874026"
