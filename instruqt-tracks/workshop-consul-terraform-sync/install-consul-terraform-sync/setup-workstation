@@ -1,60 +1,33 @@
-##!/bin/bash
-#
-##dirs
-#mkdir /root/cts
-#set-workdir /root/cts
-#
+#!/bin/bash
+
+# From git clone https://github.com/hashicorp/workshop-consul-terraform-sync.git
+cd /root/terraform/consul-terraform-sync/
+terraform init
+
 ##creds
 vault login -method=userpass username=operations password=Password1
 export CONSUL_HTTP_TOKEN=$(vault read -field token consul/creds/ops)
-#
-##install consul-terraform-sync
-#cd /tmp
-#echo "installing consul-terraform-sync..."
-#curl -O https://releases.hashicorp.com/consul-terraform-sync/0.1.0-techpreview1/consul-terraform-sync_0.1.0-techpreview1_linux_amd64.zip
-#unzip *.zip
-#mv consul-terraform-sync /usr/local/bin/consul-terraform-sync
-#rm -rf *.zip
-#cd /root
-#
+
 consulconfig=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulConfigFile | base64 -d)
 ca_cert=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulCaFile | base64 -d)
 token=$(vault kv get -field=master_token secret/consul)
-#
-#cat << EOF > /root/cts/ca.pem
-#${ca_cert}
-#EOF
-#
-##Consul Terraform Sync config
-#cat << EOF > /root/cts/config.hcl
-#log_level = "debug"
-#consul {
-#  address = "11eb1ad2-5ddc-1591-ad95-0242ac110009.consul.11eb1ad2-2609-d45e-8896-0242ac110007.az.hashicorp.cloud:8500"
-#}
-#buffer_period {
-#  min = "5s"
-#  max = "20s"
-#}
-#task {
-#  name = "AS3-Fake-Service-Website"
-#  description = "automate F5 BIG-IP Pool Members Ops for Fake Service Website"
-#  source = "f5devcentral/bigip/app-consul-sync-nia"
-#  providers = ["bigip"]
-#  services = ["web", "app"]
-#}
-#driver "terraform" {
-#  log = true
-#  required_providers {
-#    bigip = {
-#      source = "F5Networks/bigip"
-#    }
-#  }
-#}
-#provider "bigip" {
-#  address = "52.224.196.91:8443"
-#  username = "f5admin"
-#  password = "sZ@w4XXxHJz3WhQb0zD7kUi7"
-#}
-#EOF
-#
-#exit 0
+bigip_mgmt_addr=$(terraform output -state=/root/terraform/bigip/terraform.tfstate mgmt_ip):8443
+bigip_admin_user=$(terraform output -state=/root/terraform/bigip/terraform.tfstate username)
+bigip_admin_passwd=$(terraform output -state=/root/terraform/bigip/terraform.tfstate admin_password)
+
+cat << EOF > /root/terraform/consul-terraform-sync/terraform.tfvars
+ssh_public_key = "$(cat ~/.ssh/id_rsa.pub)"
+endpoint = "${endpoint}"
+consulconfig = <<-EOT
+${consulconfig}
+EOT
+ca_cert = <<-EOT
+${ca_cert}
+EOT
+consul_token = "${token}"
+bigip_mgmt_addr = "${bigip_mgmt_addr}"
+bigip_admin_user = "${bigip_admin_user}"
+bigip_admin_passwd = "${bigip_admin_passwd}"
+EOF
+
+exit 0
