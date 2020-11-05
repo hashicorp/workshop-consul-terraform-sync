@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Allow instruqt time to do its thing
+sleep 10
+
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+
+bastion_ip=$(terraform output -state /root/terraform/vnet/terraform.tfstate bastion_ip)
+echo "export bastion_ip=${bastion_ip}" >> ~/.bashrc
+
 # From git clone https://github.com/hashicorp/workshop-consul-terraform-sync.git
 cd /root/terraform/consul-terraform-sync/
 terraform init
