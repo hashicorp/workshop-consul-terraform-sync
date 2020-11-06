@@ -6,27 +6,25 @@ sudo apt-get install unzip
 #Download Consul
 CONSUL_VERSION="1.8.0+ent"
 curl --silent --remote-name https://releases.hashicorp.com/consul/$${CONSUL_VERSION}/consul_$${CONSUL_VERSION}_linux_amd64.zip
+curl --silent --remote-name https://releases.hashicorp.com/consul-terraform-sync/0.1.0-techpreview1/consul-terraform-sync_0.1.0-techpreview1_linux_amd64.zip
+unzip *.zip
 
 #Install Consul
-unzip consul_$${CONSUL_VERSION}_linux_amd64.zip
 sudo chown root:root consul
 sudo mv consul /usr/local/bin/
 consul -autocomplete-install
 complete -C /usr/local/bin/consul consul
 
-
-#Download consul-terraform-sync
-curl --silent --remote-name https://releases.hashicorp.com/consul-terraform-sync/0.1.0-techpreview1/consul-terraform-sync_0.1.0-techpreview1_linux_amd64.zip
-
 #Install consul-terraform-sync
-unzip *.zip
 sudo chown root:root consul-terraform-sync
 sudo mv consul-terraform-sync /usr/local/bin/
 
 #Create Consul Terraorm Sync User
 sudo useradd --system --home /etc/consul.d --shell /bin/false consul
 sudo mkdir --parents /opt/consul
-sudo chown --recursive consul:consul /opt/consul
+sudo mkdir --parents /opt/consul-terraform-sync.d
+sudo chown --recursive consul:consul /opt/consul 
+sudo chown --recursive consul:consul /opt/consul-terraform-sync.d
 
 #Create Systemd Config for Consul
 sudo cat << EOF > /etc/systemd/system/consul.service
@@ -58,8 +56,8 @@ Requires=network-online.target
 After=network-online.target
 
 [Service]
-User=consul-terraform-sync
-Group=consul-terraform-sync
+User=consul
+Group=consul
 ExecStart=/usr/local/bin/consul-terraform-sync -config-file=/etc/consul-terraform-sync.d/consul-terraform-sync.hcl
 KillMode=process
 Restart=always
@@ -117,6 +115,8 @@ task {
 }
 driver "terraform" {
   log = true
+  path = "/opt/consul-terraform-sync.d/"
+  working_dir = "/opt/consul-terraform-sync.d/"
   required_providers {
     bigip = {
       source = "F5Networks/bigip"
@@ -124,7 +124,7 @@ driver "terraform" {
   }
 }
 provider "bigip" {
-  address = ${bigip_mgmt_addr}
+  address = "${bigip_mgmt_addr}"
   username = "${bigip_admin_user}"
   password = "${bigip_admin_passwd}"
 }
@@ -139,3 +139,5 @@ sudo service consul status
 sudo systemctl enable consul-terraform-sync
 sudo service consul-terraform-sync start
 sudo service consul-terraform-sync status
+
+
