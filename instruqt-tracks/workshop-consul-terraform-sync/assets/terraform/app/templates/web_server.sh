@@ -17,8 +17,8 @@ curl --silent --remote-name https://releases.hashicorp.com/consul-template/$${CO
 unzip consul_$${CONSUL_VERSION}_linux_amd64.zip
 unzip consul-template_$${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip
 sudo chown root:root consul
-  sudo chown root:root consul consul-template
-  sudo mv consul* /usr/local/bin/
+sudo chown root:root consul consul-template
+sudo mv consul* /usr/local/bin/
 consul -autocomplete-install
 complete -C /usr/local/bin/consul consul
 
@@ -107,6 +107,12 @@ cat << EOF > /etc/consul.d/nginx.json
   "service": {
     "name": "web",
     "port": 9090,
+    "meta":
+      {
+        "AS3TMPL": "http"
+        "VSIP": "${bigip_mgmt_addr}"
+        "VSPORT": "9090"
+      },
     "checks": [
       {
         "id": "web",
