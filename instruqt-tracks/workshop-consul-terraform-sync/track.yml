@@ -96,10 +96,6 @@ challenges:
     type: code
     hostname: workstation
     path: /root/terraform/vault
-  - title: AKS Terraform Code
-    type: code
-    hostname: workstation
-    path: /root/terraform/aks
   - title: HCS Terraform Code
     type: code
     hostname: workstation
@@ -131,11 +127,12 @@ challenges:
     **NOTE:** you will need open the URL provided by the output in a separate tab.  If you are using chrome, you
     may be presented with a certificate error, to bypass this you can type "thisisunsafe" into the Chrome window.
 
-    The AKS, HCS services may not be running quite yet, you can monitor their progress with the following commands.
+    The HCS services may not be running quite yet, but are required before we move on to the next challenge. 
+    You can monitor its progress with the following command:
 
     Montior HCS provisioning
     ```
-    cat /root/terraform/hcs/terraform.out
+    tail -f /root/terraform/hcs/terraform.out
     ```
   notes:
   - type: text
@@ -753,4 +750,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "6439382993187874026"
+checksum: "12203845110798310705"

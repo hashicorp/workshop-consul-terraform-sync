@@ -7,9 +7,6 @@ set-workdir /root/terraform/app
 cd /root/terraform/bigip
 terraform output > /info.txt
 
-cd /root/terraform/app/as3
-terraform init
-
 cd /root/terraform/app
 terraform init
 
@@ -41,6 +38,7 @@ endpoint=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)
 consulconfig=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulConfigFile | base64 -d)
 ca_cert=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulCaFile | base64 -d)
 token=$(vault kv get -field=master_token secret/consul)
+bigip_mgmt_addr=$(terraform output -state=/root/terraform/bigip/terraform.tfstate mgmt_ip):8443
 
 cat << EOF > /root/terraform/app/terraform.tfvars
 ssh_public_key = "$(cat ~/.ssh/id_rsa.pub)"
@@ -52,8 +50,8 @@ ca_cert = <<-EOT
 ${ca_cert}
 EOT
 consul_token = "${token}"
+bigip_mgmt_addr = "${bigip_mgmt_addr}"
 EOF
-
 
 
 exit 0

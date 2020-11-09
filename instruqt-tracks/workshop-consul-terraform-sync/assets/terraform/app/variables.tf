@@ -11,3 +11,4 @@ variable "app_count" {
 variable "web_count" {
   default = 2
 }
+variable "bigip_mgmt_addr" {}
