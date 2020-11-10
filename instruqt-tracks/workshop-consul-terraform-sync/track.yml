@@ -338,7 +338,7 @@ challenges:
 
     When complete, connect to the image
     ```
-    consul_terraform_sync=$(curl -s $CONSUL_HTTP_ADDR/v1/catalog/node/consul-terraform-sync-000000 | jq -r '.Node.Address')
+    consul_terraform_sync=$(curl -s $CONSUL_HTTP_ADDR/v1/catalog/node/consul-terraform-sync-000001 | jq -r '.Node.Address')
     ssh -q -A -J azure-user@$bastion_ip azure-user@$consul_terraform_sync
     ```
 
@@ -737,4 +737,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "15900968108606186664"
+checksum: "11184921877480784917"
