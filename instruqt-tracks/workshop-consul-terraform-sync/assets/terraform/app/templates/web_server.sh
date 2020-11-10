@@ -6,7 +6,6 @@
 #Utils
 sudo apt-get install -y unzip nginx
 
-
 #Download Consul
 CONSUL_TEMPLATE_VERSION="0.22.0"
 CONSUL_VERSION="1.8.0+ent"
@@ -109,8 +108,8 @@ cat << EOF > /etc/consul.d/nginx.json
     "port": 9090,
     "meta":
       {
-        "AS3TMPL": "http"
-        "VSIP": "${bigip_mgmt_addr}"
+        "AS3TMPL": "http",
+        "VSIP": "${bigip_mgmt_addr}",
         "VSPORT": "9090"
       },
     "checks": [
