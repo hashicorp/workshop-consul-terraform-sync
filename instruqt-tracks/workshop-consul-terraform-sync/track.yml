@@ -342,11 +342,17 @@ challenges:
     ssh -q -A -J azure-user@$bastion_ip azure-user@$consul_terraform_sync
     ```
 
-    Move to the next assignment when they are ready.
+    Review the terraform-consul-sync service status with the following commands
+    ```
+    service consul-terraform-sync status
+    journalctl consul-terraform-sync.service
+    ```
+
+        Move to the next assignment when they are ready.
   notes:
   - type: text
     contents: |
-      HashiCorp maintains an official helm chart, which makes installing Consul in k8s easy!
+      Now we're going to eliminate a lot of operational friction by installing `consul-terraform-sync`. This will auto-update network infrastructure as service changes occur!
   tabs:
   - title: Cloud Consoles
     type: service
