@@ -110,30 +110,17 @@ challenges:
   type: challenge
   title: Provision F5
   teaser: Provision an F5 BIG-IP VE using Terraform
-  assignment: |-
-    Now we will provision the F5 BIG-IP Virtual Edition using Terraform. <br>
-
-    In the `Shell` tab run the following commands.
-    ```
-    terraform plan
-    terraform apply -auto-approve
-    ```
-
-    This can take several minutes to complete, while you are waiting
-    take the opportunity to review the `Terraform Code` tab to see the IaC definition.
-
-    Once the apply is complete, you can Navigate to the BIG-IP at the IP address in the Terraform output.
-
-    **NOTE:** you will need open the URL provided by the output in a separate tab.  If you are using chrome, you
-    may be presented with a certificate error, to bypass this you can type "thisisunsafe" into the Chrome window.
-
-    The HCS services may not be running quite yet, but are required before we move on to the next challenge. 
-    You can monitor its progress with the following command:
-
-    Montior HCS provisioning
-    ```
-    tail -f /root/terraform/hcs/terraform.out
-    ```
+  assignment: "Now we will provision the F5 BIG-IP Virtual Edition using Terraform.
+    <br>\n\nIn the `Shell` tab run the following commands.\n```\nterraform plan\nterraform
+    apply -auto-approve\n```\n\nThis can take several minutes to complete, while you
+    are waiting\ntake the opportunity to review the `Terraform Code` tab to see the
+    IaC definition.\n\nOnce the apply is complete, you can Navigate to the BIG-IP
+    at the IP address in the Terraform output.\n\n**NOTE:** you will need open the
+    URL provided by the output in a separate tab.  If you are using chrome, you\nmay
+    be presented with a certificate error, to bypass this you can type \"thisisunsafe\"
+    into the Chrome window.\n\nThe HCS services may not be running quite yet, but
+    are required before we move on to the next challenge. \nYou can monitor its progress
+    with the following command:\n\nMontior HCS provisioning\n```\ntail -f /root/terraform/hcs/terraform.out\n```"
   notes:
   - type: text
     contents: |
@@ -750,4 +737,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "12203845110798310705"
+checksum: "15900968108606186664"
