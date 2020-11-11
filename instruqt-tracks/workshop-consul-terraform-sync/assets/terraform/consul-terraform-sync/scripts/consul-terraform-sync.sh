@@ -4,10 +4,12 @@
 sudo apt-get install unzip
 
 #Download Consul
-CONSUL_VERSION="1.8.0+ent"
-curl --silent --remote-name https://releases.hashicorp.com/consul/$${CONSUL_VERSION}/consul_$${CONSUL_VERSION}_linux_amd64.zip
+curl --silent --remote-name https://releases.hashicorp.com/consul/1.8.0+ent/consul_1.8.0+ent_linux_amd64.zip
+unzip consul_1.8.0+ent_linux_amd64.zip
+
+#Download Consul Terraform Sync
 curl --silent --remote-name https://releases.hashicorp.com/consul-terraform-sync/0.1.0-techpreview1/consul-terraform-sync_0.1.0-techpreview1_linux_amd64.zip
-unzip *.zip
+unzip consul-terraform-sync_0.1.0-techpreview1_linux_amd64.zip
 
 #Install Consul
 sudo chown root:root consul
@@ -97,7 +99,7 @@ acl = {
 EOF
 
 cat << EOF > /etc/consul-terraform-sync.d/consul-terraform-sync.hcl
-log_level = "debug"
+log_level = "info"
 consul {
   address = "localhost:8500"
   token = "${consul_token}"
@@ -124,7 +126,7 @@ driver "terraform" {
   }
 }
 provider "bigip" {
-  address = "${bigip_mgmt_addr}"
+  address = "${bigip_mgmt_addr}:8443"
   username = "${bigip_admin_user}"
   password = "${bigip_admin_passwd}"
 }
