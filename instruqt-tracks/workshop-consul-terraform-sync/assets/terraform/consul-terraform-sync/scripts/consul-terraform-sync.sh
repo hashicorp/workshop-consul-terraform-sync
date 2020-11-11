@@ -99,7 +99,7 @@ acl = {
 EOF
 
 cat << EOF > /etc/consul-terraform-sync.d/consul-terraform-sync.hcl
-log_level = "debug"
+log_level = "info"
 consul {
   address = "localhost:8500"
   token = "${consul_token}"

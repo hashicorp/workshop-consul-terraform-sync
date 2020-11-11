@@ -70,7 +70,7 @@ challenges:
   id: 8g5r3gchzqun
   type: challenge
   title: Provision Core Services
-  teaser: Provision Vault, HCS, and AKS using Terraform
+  teaser: Provision Vault and HCS using Terraform
   assignment: "You will use Terraform to provision these services in the background
     while you set up Consul in the next few assignments. <br>\n\nStart with Vault.
     Vault is a secrets management solution that we will use to securely store sensitive
@@ -326,7 +326,8 @@ challenges:
   id: jskeddctb13s
   type: challenge
   title: Deploy 'Consul Terraform Sync'
-  teaser: Now we are going install Consul Terraform Sync
+  teaser: Now we are going install Consul Terraform Sync and bring dynamic service
+    discovery to network infrastructure.
   assignment: |2-
 
     ```
@@ -342,13 +343,18 @@ challenges:
     ssh -q -A -J azure-user@$bastion_ip azure-user@$consul_terraform_sync
     ```
 
-    Review the terraform-consul-sync service status with the following commands
+    Take a look at the `consul-terraform-sync` configuration
+
     ```
-    service consul-terraform-sync status
-    journalctl consul-terraform-sync.service
+    cat /etc/consul-terraform-sync.d/consul-terraform-sync.hcl
     ```
 
-        Move to the next assignment when they are ready.
+    Review the terraform-consul-sync service status with the following command
+    ```
+    service consul-terraform-sync status
+    ```
+
+    Move to the next assignment when they are ready.
   notes:
   - type: text
     contents: |
@@ -381,112 +387,6 @@ challenges:
     path: /info.txt
   difficulty: basic
   timelimit: 3000
-- slug: deploy-service-to-bigip
-  id: npqma05puqay
-  type: challenge
-  title: Deploy Service to BIG-IP
-  teaser: Deploy Service to BIG-IP via Consul Terraform Sync.
-  assignment: |-
-    The AS3 declaration from the prior exercise has been removed for you.
-    You will now transition the application to AKS. <br>
-
-    With AKS connected to HCS you can deploy your application pods.
-    Consul will auto inject sidecars for each pod.
-
-    Deploy the Pods and wait until they are ready.
-
-    ```
-    kubectl apply -f /root/apps
-    kubectl get pods
-    ```
-
-    Now you need to expose the Web application to the outside world.
-    You will first set up an Ambassador mapping, and then expose Ambassador to the outside world with annotations for BIG-IP
-
-    ```
-    cat <<EOF | kubectl apply -f -
-    ---
-    apiVersion: getambassador.io/v2
-    kind: Mapping
-    metadata:
-      name: consul-web-mapping-tls
-    spec:
-      prefix: /
-      service: web-sidecar-proxy
-      resolver: consul-east-us
-      tls: ambassador-consul
-      load_balancer:
-        policy: round_robin
-    EOF
-    ```
-
-    Annotate the Ambassador service.
-
-    ```
-    cat /root/ambassador/aes-service.yaml
-    kubectl apply -f /root/ambassador/aes-service.yaml
-    ```
-
-    Deploy the AS3 declaration.
-
-    ```
-    cat /root/ambassador/f5-ambassador.yaml
-    kubectl apply -f /root/ambassador/f5-ambassador.yaml
-    ```
-
-    Your application should now be available over BIG-IP. Test it below.
-
-    ```
-    app=$(terraform output app_url)
-    echo $app
-    curl -sv $app
-    ```
-
-    You should see the following error: `upstream connect error or disconnect/reset before headers. reset reason: connection termination` <br>
-    We need to configure mTLS between the applications to resolve this error. Consul intentions for mTLS are deny by default. <br>
-
-    You will perform this task in the next assignment.
-  notes:
-  - type: text
-    contents: |
-      Consul works equally well in public, private, virtual, physical, or microservices based environments.
-  tabs:
-  - title: Cloud Consoles
-    type: service
-    hostname: workstation
-    path: /
-    port: 80
-  - title: Consul
-    type: service
-    hostname: workstation
-    path: /
-    port: 8500
-  - title: Vault
-    type: service
-    hostname: workstation
-    path: /
-    port: 8200
-  - title: Shell
-    type: terminal
-    hostname: workstation
-  - title: Apps
-    type: code
-    hostname: workstation
-    path: /root/apps
-  - title: App
-    type: service
-    hostname: workstation
-    path: /ui
-    port: 8080
-  - title: App Access Info
-    type: code
-    hostname: workstation
-    path: /info.txt
-  - title: Current lab setup
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
-  difficulty: basic
-  timelimit: 3000
 - slug: review-app-environment
   id: hbbtrye3yi1b
   type: challenge
@@ -510,7 +410,6 @@ challenges:
     You can view the VIP in the BIG-IP UI by naviagating to the `Local Traffic -> Virtual Servers`
 
     You can view the pool members navigating to `Local Traffic -> Pools`
-
 
 
     ** Web Tier ** <br>
@@ -743,4 +642,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "11184921877480784917"
+checksum: "2838021828510916557"
