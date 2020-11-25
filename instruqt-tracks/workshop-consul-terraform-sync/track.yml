@@ -63,7 +63,7 @@ challenges:
     hcs-vnet: 10.0.0.0/16
     shared-svcs-vnet: 10.2.0.0/16
     app-vnet: 10.3.0.0/16
-    aks-vnet: 10.4.0.0/16
+    DNZ-vnet: 10.4.0.0/16
     ```
 
     You will leverage these VNet in the next few assignments.
