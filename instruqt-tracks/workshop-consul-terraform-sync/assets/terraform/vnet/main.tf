@@ -41,6 +41,19 @@ module "app-network" {
   }
 }
 
+module "dmz-network" {
+  source              = "Azure/network/azurerm"
+  resource_group_name = azurerm_resource_group.instruqt.name
+  vnet_name           = "dmz-vnet"
+  address_space       = "10.4.0.0/16"
+  subnet_prefixes     = ["10.4.0.0/24"]
+  subnet_names        = ["DMZ"]
+
+  tags = {
+    owner = "instruqt@hashicorp.com"
+  }
+}
+
 resource "azurerm_public_ip" "bastion" {
   name                = "bastion-ip"
   location            = azurerm_resource_group.instruqt.location
@@ -137,5 +150,19 @@ resource "azurerm_virtual_network_peering" "app-shared" {
   name                      = "appToShared"
   resource_group_name       = azurerm_resource_group.instruqt.name
   virtual_network_name      = "app-vnet"
+  remote_virtual_network_id = module.shared-svcs-network.vnet_id
+}
+
+resource "azurerm_virtual_network_peering" "shared-dmz" {
+  name                      = "SharedToDMZ"
+  resource_group_name       = azurerm_resource_group.instruqt.name
+  virtual_network_name      = "shared-svcs-vnet"
+  remote_virtual_network_id = module.dmz-network.vnet_id
+}
+
+resource "azurerm_virtual_network_peering" "dmz-shared" {
+  name                      = "DMZToShared"
+  resource_group_name       = azurerm_resource_group.instruqt.name
+  virtual_network_name      = "dmz-vnet"
   remote_virtual_network_id = module.shared-svcs-network.vnet_id
 }

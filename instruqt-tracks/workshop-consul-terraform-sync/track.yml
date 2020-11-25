@@ -33,12 +33,12 @@ challenges:
     contents: Every journey begins with a single step! Step 1, review the environment
       Terraform is going to build for Consul Terraform Sync.
   tabs:
-  - title: Lab Environment
+  - title: Before CTS - Manual
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/provision-azure-vnets.html
-  - title: Shell
-    type: terminal
-    hostname: workstation
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C1-Before_CTS.html
+  - title: After CTS - Automated
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C1-With_CTS.html
   difficulty: basic
   timelimit: 300
 - slug: provision-azure-vnets
@@ -87,7 +87,7 @@ challenges:
     path: /root/terraform/vnet
   - title: Current lab setup
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/provision-azure-vnets.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C2-Provision_VNETs.html
   difficulty: basic
   timelimit: 3000
 - slug: provision-core-services
@@ -126,7 +126,7 @@ challenges:
     path: /root/terraform/hcs
   - title: Current lab setup
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/provision-core-services.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C3-Provision_Core_Svcs.html
   difficulty: basic
   timelimit: 3000
 - slug: provision-f5
@@ -164,7 +164,7 @@ challenges:
     path: /root/terraform/bigip
   - title: Current lab setup
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/provision-f5.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C4-Provision_BIG-IP.html
   difficulty: basic
   timelimit: 3000
 - slug: provision-palo-alto-firewall
@@ -183,6 +183,9 @@ challenges:
   - title: Shell
     type: terminal
     hostname: workstation
+  - title: Provision PANW
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C5-Provision_PANW_FW.html
   difficulty: basic
   timelimit: 300
 - slug: validate-hcs
@@ -657,4 +660,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "9052822761551627475"
+checksum: "7962523504508104972"
