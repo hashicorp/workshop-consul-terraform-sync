@@ -2,13 +2,15 @@ slug: workshop-consul-terraform-sync
 id: zd9iqr8wyub0
 version: 0.0.1
 type: track
-title: Workshop consul-terraform-sync
+title: Workshop - Consul-Terraform-Sync
 teaser: Use Terraform and Consul to manage day one and day two operations of F5 in
   Azure
 description: Use Terraform and Consul to manage day one and day two operations of
   F5 in Azure
 icon: ""
-tags: []
+tags:
+- consul
+- NIA
 owner: hashicorp
 developers:
 - lance@hashicorp.com
@@ -17,6 +19,28 @@ private: true
 published: true
 show_timer: true
 challenges:
+- slug: review-lab-objectives
+  id: rihjzbfzsm9m
+  type: challenge
+  title: Review Lab Objectives
+  teaser: Before we begin, lets quickly review the architecture.
+  assignment: |-
+    In the next few challenges we are going to provision resources to build the cloud environment for Consul Terraform Sync.
+
+    Once the environment has finished provisioning, you will install `consul-terraform-sync` and review its configuration and workflow.
+  notes:
+  - type: text
+    contents: Every journey begins with a single step! Step 1, review the environment
+      Terraform is going to build for Consul Terraform Sync.
+  tabs:
+  - title: Lab Environment
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/provision-azure-vnets.html
+  - title: Shell
+    type: terminal
+    hostname: workstation
+  difficulty: basic
+  timelimit: 300
 - slug: provision-azure-vnets
   id: y1cns7c1xooc
   type: challenge
@@ -143,6 +167,24 @@ challenges:
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/provision-f5.html
   difficulty: basic
   timelimit: 3000
+- slug: provision-palo-alto-firewall
+  id: fyfegnx6ag8o
+  type: challenge
+  title: Provision Palo Alto Firewall
+  teaser: A short description of the challenge.
+  assignment: |-
+    The assignment the participant needs to complete in order to proceed.
+
+    You can use any GitHub flavoured markdown.
+  notes:
+  - type: text
+    contents: Replace this text with your own text
+  tabs:
+  - title: Shell
+    type: terminal
+    hostname: workstation
+  difficulty: basic
+  timelimit: 300
 - slug: validate-hcs
   id: z5sy2diwt2hl
   type: challenge
@@ -405,7 +447,7 @@ challenges:
 
     **Remember you will to need to view this UI in a different browser tab**, for convenenience we have put all the required information in the `info.txt` file in the `App Access Info` tab <br>
 
-    The VIP and pools are provisioned in the `Consul_SD` partition, make sure you select it from the drop down menu in the top right corner of the screen.
+    The VIP and pools are provisioned in the `consul-terraform-sync` partition, make sure you select it from the drop down menu in the top right corner of the screen.
 
     You can view the VIP in the BIG-IP UI by naviagating to the `Local Traffic -> Virtual Servers`
 
@@ -414,38 +456,11 @@ challenges:
 
     ** Web Tier ** <br>
 
+    Company policy is to have ingress communications pass though an F5 Load-balancer running an ASM Web Application Firewall policy.
+
     The VIP for the web tier of the application lives on the F5 BIG-IP virtual appliance. The pools servicing this VIP are dynamically populated by querying Consul for all instances of the service called `web` <br>
 
     The mapping between Consul and the pools was declared in the AS3 declaration of the VIP.
-
-    Examine the AS3 declaration for the application.  You will see where the members are referencing a Consul API endpoint.
-
-    From the `Shell` tab
-    ```
-    cat as3/templates/as3_declaration.json
-    ```
-
-    The AS3 definition also includes a WAF policy. You can review the configured policy by navigating to the `Security -> Application Security -> Security Policies` tab in the `Consul_SD` partition <br>
-
-    The WAF policy contains a URL blocking strategy that prevents users from attempting to access sensitive portions of the application.
-
-    ** Test WAF Policy **
-
-    The sample WAF policy includes a rule that ensures that the `/admin` path of the application is not available externally.  You open a new tab using the URL of the application contained within the `App Access Info` tab.  The application should come up, add `/admin` to the URL in your browser. We can also test the WAF policy using curl in the local shell.
-
-    Test a URL allowed by the WAF policy
-    ```
-    vip=$(terraform output -state /root/terraform/bigip/terraform.tfstate  app_url)
-    curl $vip
-
-    ```
-
-    Test a URL blocked by the WAF policy
-    ```
-    vip=$(terraform output -state /root/terraform/bigip/terraform.tfstate  app_url)
-    curl $vip/admin
-
-    ```
 
     Next you can explore some of the service discovery capabilities of Consul.
 
@@ -642,4 +657,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "2838021828510916557"
+checksum: "9052822761551627475"
