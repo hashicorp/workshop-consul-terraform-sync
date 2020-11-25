@@ -7,7 +7,6 @@
 sudo apt-get install unzip
 
 #Download Consul
-CONSUL_VERSION="1.8.0+ent"
 curl --silent --remote-name https://releases.hashicorp.com/consul/1.8.0+ent/consul_1.8.0+ent_linux_amd64.zip
 
 #Install Consul
