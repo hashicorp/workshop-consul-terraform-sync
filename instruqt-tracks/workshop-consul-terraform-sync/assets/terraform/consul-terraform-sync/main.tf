@@ -67,7 +67,7 @@ resource "azurerm_virtual_machine_scale_set" "consul-terraform-sync" {
     network_security_group_id = azurerm_network_security_group.cts-sg.id
     ip_configuration {
       name      = "App-IPConfiguration"
-      subnet_id = data.terraform_remote_state.vnet.outputs.app_subnets[0]
+      subnet_id = data.terraform_remote_state.vnet.outputs.app_subnet
       primary   = true
     }
   }
