@@ -33,21 +33,8 @@ module "app-network" {
   resource_group_name = azurerm_resource_group.instruqt.name
   vnet_name           = "app-vnet"
   address_space       = "10.3.0.0/16"
-  subnet_prefixes     = ["10.3.0.0/24"]
-  subnet_names        = ["VM"]
-
-  tags = {
-    owner = "instruqt@hashicorp.com"
-  }
-}
-
-module "dmz-network" {
-  source              = "Azure/network/azurerm"
-  resource_group_name = azurerm_resource_group.instruqt.name
-  vnet_name           = "dmz-vnet"
-  address_space       = "10.4.0.0/16"
-  subnet_prefixes     = ["10.4.0.0/24"]
-  subnet_names        = ["DMZ"]
+  subnet_prefixes     = ["10.3.1.0/24","10.3.2.0/24"]
+  subnet_names        = ["DMZ","VM"]
 
   tags = {
     owner = "instruqt@hashicorp.com"
@@ -150,19 +137,5 @@ resource "azurerm_virtual_network_peering" "app-shared" {
   name                      = "appToShared"
   resource_group_name       = azurerm_resource_group.instruqt.name
   virtual_network_name      = "app-vnet"
-  remote_virtual_network_id = module.shared-svcs-network.vnet_id
-}
-
-resource "azurerm_virtual_network_peering" "shared-dmz" {
-  name                      = "SharedToDMZ"
-  resource_group_name       = azurerm_resource_group.instruqt.name
-  virtual_network_name      = "shared-svcs-vnet"
-  remote_virtual_network_id = module.dmz-network.vnet_id
-}
-
-resource "azurerm_virtual_network_peering" "dmz-shared" {
-  name                      = "DMZToShared"
-  resource_group_name       = azurerm_resource_group.instruqt.name
-  virtual_network_name      = "dmz-vnet"
   remote_virtual_network_id = module.shared-svcs-network.vnet_id
 }

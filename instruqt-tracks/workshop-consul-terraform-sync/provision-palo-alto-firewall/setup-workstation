@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+
+set-workdir /root/terraform/panw
+
+cd /root/terraform/panw
+terraform init
+
+az vm image terms accept --urn paloaltonetworks:vmseries1:bundle1:latest
+
+exit 0

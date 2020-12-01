@@ -43,7 +43,7 @@ resource "azurerm_linux_virtual_machine" "f5bigip" {
   location            = data.terraform_remote_state.vnet.outputs.resource_group_location
   resource_group_name = data.terraform_remote_state.vnet.outputs.resource_group_name
 
-  network_interface_ids = [azurerm_network_interface.ext-nic.id]
+  network_interface_ids = [azurerm_network_interface.dmz-nic.id]
   size                  = var.instance_type
   //   zone                            = element(local.azs,count.index % length(local.azs))
   admin_username                  = var.admin_username
@@ -97,15 +97,15 @@ resource "azurerm_public_ip" "sip_public_ip" {
   }
 }
 
-resource "azurerm_network_interface" "ext-nic" {
-  name                 = "bigip-external-nic"
+resource "azurerm_network_interface" "dmz-nic" {
+  name                 = "bigip-dmz-nic"
   location             = data.terraform_remote_state.vnet.outputs.resource_group_location
   resource_group_name  = data.terraform_remote_state.vnet.outputs.resource_group_name
   enable_ip_forwarding = true
 
   ip_configuration {
     name                          = "primary"
-    subnet_id                     = data.terraform_remote_state.vnet.outputs.app_subnets[0]
+    subnet_id                     = data.terraform_remote_state.vnet.outputs.dmz_subnet
     private_ip_address_allocation = "Dynamic"
     primary                       = true
     public_ip_address_id          = azurerm_public_ip.sip_public_ip.id
@@ -113,10 +113,10 @@ resource "azurerm_network_interface" "ext-nic" {
 
   tags = {
     environment = "instruqt"
-
   }
 }
-resource "azurerm_network_interface_security_group_association" "ext-nic-security" {
-  network_interface_id      = azurerm_network_interface.ext-nic.id
+
+resource "azurerm_network_interface_security_group_association" "dmz-nic-security" {
+  network_interface_id      = azurerm_network_interface.dmz-nic.id
   network_security_group_id = azurerm_network_security_group.f5_public.id
 }
