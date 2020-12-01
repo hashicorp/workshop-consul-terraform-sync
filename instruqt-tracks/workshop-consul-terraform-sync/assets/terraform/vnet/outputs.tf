@@ -18,8 +18,12 @@ output "app_vnet" {
   value = module.app-network.vnet_id
 }
 
-output "app_subnets" {
-  value = module.app-network.vnet_subnets
+output "app_subnet" {
+  value = module.app-network.vnet_subnets[1]
+}
+
+output "dmz_subnet" {
+  value = module.app-network.vnet_subnets[0]
 }
 
 output "bastion_ip" {
