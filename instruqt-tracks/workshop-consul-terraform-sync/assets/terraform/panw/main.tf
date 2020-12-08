@@ -171,7 +171,8 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
       [
         "storage-account=${azurerm_storage_account.PAN_FW_STG_AC.name}",
         "access-key=${azurerm_storage_account.PAN_FW_STG_AC.primary_access_key}",
-        "file-share=${azurerm_storage_share.bootstrap-storage-share.name}"
+#        "file-share=${azurerm_storage_share.bootstrap-storage-share.name}"
+        "file-share=${azurerm_storage_share.bootstrap-storage-share.url}"
       ],
     )
   }
