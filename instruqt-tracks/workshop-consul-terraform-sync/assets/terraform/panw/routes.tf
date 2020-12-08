@@ -4,10 +4,10 @@ resource "azurerm_route_table" "PAN_FW_RT_Trust" {
   resource_group_name = data.terraform_remote_state.vnet.outputs.resource_group_name
 
   route {
-    name           = "Trust-to-intranetwork"
+    name           = "routeToTrust"
     address_prefix = "0.0.0.0/0"
     next_hop_type  = "VirtualAppliance"
-    next_hop_in_ip_address = join("", list(var.IPAddressPrefix, ".2.4"))
+    next_hop_in_ip_address = "10.3.1.5"
   }
 
   tags = {
@@ -15,23 +15,23 @@ resource "azurerm_route_table" "PAN_FW_RT_Trust" {
   }
 }
 
-resource "azurerm_route_table" "PAN_FW_RT_Web" {
-  name                = var.routeTableWeb
+resource "azurerm_route_table" "PAN_FW_RT_App" {
+  name                = "routeToApp"
   location            = data.terraform_remote_state.vnet.outputs.resource_group_location
   resource_group_name = data.terraform_remote_state.vnet.outputs.resource_group_name
 
   route {
-    name           = "Web-to-Firewall-DB"
-    address_prefix = join("", list(var.IPAddressPrefix, ".4.0/24"))
+    name           = "routeToApp"
+    address_prefix = "10.3.2.0/24"
     next_hop_type  = "VirtualAppliance"
-    next_hop_in_ip_address = join("", list(var.IPAddressPrefix, ".2.4"))
+    next_hop_in_ip_address = "10.3.2.5"
   }
 
   route {
     name           = "Web-default-route"
     address_prefix = "0.0.0.0/0"
     next_hop_type  = "VirtualAppliance"
-    next_hop_in_ip_address = join("", list(var.IPAddressPrefix, ".2.4"))
+    next_hop_in_ip_address = "10.3.2.5"
   }
 
   tags = {
@@ -39,23 +39,23 @@ resource "azurerm_route_table" "PAN_FW_RT_Web" {
   }
 }
 
-resource "azurerm_route_table" "PAN_FW_RT_DB" {
-  name                = var.routeTableDB
+resource "azurerm_route_table" "PAN_FW_RT_DMZ" {
+  name                = "routeToDmz"
   location            = data.terraform_remote_state.vnet.outputs.resource_group_location
   resource_group_name = data.terraform_remote_state.vnet.outputs.resource_group_name
 
   route {
-    name           = "DB-to-Firewall-Web"
-    address_prefix = join("", list(var.IPAddressPrefix, ".3.0/24"))
+    name           = "DMZ-to-Firewall-Web"
+    address_prefix = "10.3.1.0/24"
     next_hop_type  = "VirtualAppliance"
-    next_hop_in_ip_address = join("", list(var.IPAddressPrefix, ".2.4"))
+    next_hop_in_ip_address = "10.3.1.5"
   }
 
   route {
-    name                   = "DB-default-route"
+    name                   = "DMZ-default-route"
     address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = join("", list(var.IPAddressPrefix, ".2.4"))
+    next_hop_in_ip_address = "10.3.1.5"
   }
 
   tags =  {

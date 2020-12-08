@@ -27,6 +27,56 @@ resource "azurerm_storage_account" "PAN_FW_STG_AC" {
   account_tier             = "Standard" 
 }
 
+## START Firewall VM-Series Bootstrap ##
+resource "azurerm_storage_share" "bootstrap-storage-share" {
+  name                 = "bootstrapshare-${var.StorageAccountName}"
+  storage_account_name = azurerm_storage_account.PAN_FW_STG_AC.name
+}
+
+data "template_file" "render-init-cfg" {
+  template = file("${path.module}/init-cfg.tmpl")
+  vars = {
+    "hostname"         = var.hostname,
+    "tplname"          = var.tplname,
+    "dgname"           = var.dgname,
+    "dns-primary"      = var.dns-primary,
+    "dns-secondary"    = var.dns-secondary,
+    "vm-auth-key"      = var.vm-auth-key,
+    "op-command-modes" = var.op-command-modes
+  }
+}
+
+resource "local_file" "write-init-cfg" {
+  content  = data.template_file.render-init-cfg.rendered
+  filename = "${path.root}/files/config/init-cfg.txt"
+}
+
+resource "null_resource" "file_uploads" {
+
+  provisioner "local-exec" {
+    command = "az storage directory create --name config --share-name ${azurerm_storage_share.bootstrap-storage-share.name} --account-name ${azurerm_storage_account.PAN_FW_STG_AC.name} --account-key ${azurerm_storage_account.PAN_FW_STG_AC.primary_access_key}"
+  }
+
+  provisioner "local-exec" {
+    command = "az storage directory create --name content --share-name ${azurerm_storage_share.bootstrap-storage-share.name} --account-name ${azurerm_storage_account.PAN_FW_STG_AC.name} --account-key ${azurerm_storage_account.PAN_FW_STG_AC.primary_access_key}"
+  }
+
+  provisioner "local-exec" {
+    command = "az storage directory create --name license --share-name ${azurerm_storage_share.bootstrap-storage-share.name} --account-name ${azurerm_storage_account.PAN_FW_STG_AC.name} --account-key ${azurerm_storage_account.PAN_FW_STG_AC.primary_access_key}"
+  }
+
+  provisioner "local-exec" {
+    command = "az storage directory create --name software --share-name ${azurerm_storage_share.bootstrap-storage-share.name} --account-name ${azurerm_storage_account.PAN_FW_STG_AC.name} --account-key ${azurerm_storage_account.PAN_FW_STG_AC.primary_access_key}"
+  }
+
+  provisioner "local-exec" {
+    command = "cd ${path.root}/files; az storage file upload-batch --account-name ${azurerm_storage_account.PAN_FW_STG_AC.name} --account-key ${azurerm_storage_account.PAN_FW_STG_AC.primary_access_key} --source . --destination ${azurerm_storage_share.bootstrap-storage-share.name}"
+  }
+
+}
+## END Firewall VM-Series Bootstrap ##
+
+## START Firewall VM-Series ##
 resource "azurerm_public_ip" "PublicIP_0" {
   name                = var.fwpublicIPName
   location            = data.terraform_remote_state.vnet.outputs.resource_group_location
@@ -82,25 +132,6 @@ resource "azurerm_network_interface" "VNIC1" {
   }
 }
 
-#resource "azurerm_network_interface" "VNIC2" {
-#  name                 = join("", list("FW", var.nicName, "2"))
-#  location             = data.terraform_remote_state.vnet.outputs.resource_group_location
-#  resource_group_name  = data.terraform_remote_state.vnet.outputs.resource_group_name
-##  depends_on           = [azurerm_virtual_network.app_subnet]
-#  enable_ip_forwarding = true
-#
-#  ip_configuration {
-#    name                          = join("", list("ipconfig", "2"))
-#    subnet_id                     = data.terraform_remote_state.vnet.outputs.app_subnets[0]
-#    private_ip_address_allocation = "Dynamic"
-##    private_ip_address            = join("", list(var.IPAddressPrefix, ".2.4"))
-#  }
-#
-#  tags = {
-#    displayName = join("", list("NetworkInterfaces", "2"))
-#  }
-#}
-
 resource "azurerm_virtual_machine" "PAN_FW_FW" {
   name                = var.FirewallVmName
   location            = data.terraform_remote_state.vnet.outputs.resource_group_location
@@ -108,8 +139,8 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
   vm_size             = var.FirewallVmSize
 
   depends_on = [azurerm_network_interface.VNIC0,
-                azurerm_network_interface.VNIC1
-#                azurerm_network_interface.VNIC2
+                azurerm_network_interface.VNIC1,
+                null_resource.file_uploads
                 ]
   plan {
     name      = var.fwSku
@@ -135,6 +166,14 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
     computer_name  = var.FirewallVmName
     admin_username = var.adminUsername
     admin_password = var.adminPassword
+    custom_data = join(
+      ",",
+      [
+        "storage-account=${azurerm_storage_account.PAN_FW_STG_AC.name}",
+        "access-key=${azurerm_storage_account.PAN_FW_STG_AC.primary_access_key}",
+        "file-share=${azurerm_storage_share.bootstrap-storage-share.name}"
+      ],
+    )
   }
 
   primary_network_interface_id = azurerm_network_interface.VNIC0.id
@@ -147,3 +186,5 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
     disable_password_authentication = false
   }
 }
+
+## END Firewall VM-Series ##
