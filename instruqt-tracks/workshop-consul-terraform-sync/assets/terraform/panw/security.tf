@@ -23,7 +23,7 @@ resource "azurerm_network_security_group" "PAN_FW_NSG" {
     protocol                   = "*"
     source_port_range          = "*"
     destination_port_range     = "*"
-    source_address_prefix      = join("", list(var.IPAddressPrefix, ".0.0/16"))
+    source_address_prefix      = "10.3.0.0/16"
     destination_address_prefix = "*"
   }
 
@@ -47,8 +47,8 @@ resource "azurerm_network_security_group" "PAN_FW_NSG" {
     protocol                   = "*"
     source_port_range          = "*"
     destination_port_range     = "*"
-    source_address_prefix      = "10.5.0.0/16"
-    destination_address_prefix = "10.5.0.0/16"
+    source_address_prefix      = "10.3.0.0/16"
+    destination_address_prefix = "10.3.0.0/16"
   }
 
   security_rule {
