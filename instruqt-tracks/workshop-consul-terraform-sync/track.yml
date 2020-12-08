@@ -172,10 +172,12 @@ challenges:
   type: challenge
   title: Provision Palo Alto Firewall
   teaser: Provision a Palo Alto VM-Series Firewall using Terraform.
-  assignment: |-
-    The assignment the participant needs to complete in order to proceed.
-
-    You can use any GitHub flavoured markdown.
+  assignment: "Now we will provision the Palo Alto Firewall using Terraform.\n\nIn
+    the `Shell` tab run the following commands.\n\n```\nterraform plan\nterraform
+    apply -auto-approve\n```\n\nThis can take several minutes to complete, while you
+    are waiting \ntake the opportunity to review the `Terraform Code` tab to see the\nIaC
+    definition.\n\nOnce the apply is complete, you can Navigate to the Palo Alto Firewall\nat
+    the IP address in the Terraform output."
   notes:
   - type: text
     contents: Replace this text with your own text
@@ -317,7 +319,7 @@ challenges:
   id: k0reagnnfzuc
   type: challenge
   title: Deploy App environments
-  teaser: Migrate an existing VM based application to the cloud.
+  teaser: Deploy a 2-tier VM based application to the cloud.
   assignment: "\nIn this assignment we will be deploying the current application into
     Azure based VM's. <br>\n\nAs part of the cloud migration, the VM's will also be
     configured to run a Consul agent that registers these services with Consul.  This
@@ -669,4 +671,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "5780836871263423531"
+checksum: "11959205962838714739"

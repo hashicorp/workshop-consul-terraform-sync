@@ -17,18 +17,6 @@ variable "hostname" {
   type        = string
 }
 
-variable "panorama-server" {
-  default     = ""
-  description = "The FQDN or IP address of the primary Panorama server"
-  type        = string
-}
-
-variable "panorama-server2" {
-  default     = ""
-  description = "The FQDN or IP address of the secondary Panorama server"
-  type        = string
-}
-
 variable "tplname" {
   default     = ""
   description = "The Panorama template stack name"
