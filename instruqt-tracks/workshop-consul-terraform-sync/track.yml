@@ -177,7 +177,8 @@ challenges:
     apply -auto-approve\n```\n\nThis can take several minutes to complete, while you
     are waiting \ntake the opportunity to review the `Terraform Code` tab to see the\nIaC
     definition.\n\nOnce the apply is complete, you can Navigate to the Palo Alto Firewall\nat
-    the IP address in the Terraform output."
+    the IP address in the Terraform output.\n\nFor CLI access:\n ```\nssh -q -A -J
+    azure-user@$bastion_ip paloalto@$firewall_ip\n```"
   notes:
   - type: text
     contents: Replace this text with your own text
@@ -671,4 +672,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "2987122486234843275"
+checksum: "9524857823082687656"

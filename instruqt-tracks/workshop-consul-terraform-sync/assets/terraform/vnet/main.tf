@@ -33,8 +33,8 @@ module "app-network" {
   resource_group_name = azurerm_resource_group.instruqt.name
   vnet_name           = "app-vnet"
   address_space       = "10.3.0.0/16"
-  subnet_prefixes     = ["10.3.1.0/24","10.3.2.0/24"]
-  subnet_names        = ["DMZ","VM"]
+  subnet_prefixes     = ["10.3.1.0/24","10.3.2.0/24","10.3.3.0/24","10.3.4.0/24"]
+  subnet_names        = ["MGMT","INTERNET","DMZ","APP"]
 
   tags = {
     owner = "instruqt@hashicorp.com"
