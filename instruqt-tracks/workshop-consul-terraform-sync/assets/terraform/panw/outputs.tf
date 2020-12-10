@@ -1,4 +1,8 @@
 output "FirewallIP" {
+  value = azurerm_public_ip.PublicIP_0.ip_address
+}
+
+output "FirewallIPURL" {
   value = join("", list("https://", azurerm_public_ip.PublicIP_0.ip_address))
 }
 
