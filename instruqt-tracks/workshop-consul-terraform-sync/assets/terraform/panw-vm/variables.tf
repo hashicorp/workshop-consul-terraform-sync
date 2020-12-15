@@ -9,6 +9,8 @@ variable "FirewallVmSize" {}
 variable "FromGatewayLogin" {}
 variable "IPAddressDmzNetwork" {}
 variable "IPAddressAppNetwork" {}
+variable "IPAddressMgmtNetwork" {}
+variable "IPAddressInternetNetwork" {}
 
 variable "storageAccountType" {
   default = "Standard_LRS"

@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+
+set-workdir /root/terraform/panw-config
+
+cd /root/terraform/panw-config
+terraform init
+
+bastion_ip=$(terraform output -state /root/terraform/vnet/terraform.tfstate bastion_ip)
+firewall_ip=$(terraform output -state /root/terraform/panw-vm/terraform.tfstate FirewallIP)
+
+exit 0
