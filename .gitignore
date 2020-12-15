@@ -1,2 +1,4 @@
-instruqt-tracks/workshop-consul-terraform-sync/.DS_Store
-instruqt-tracks/workshop-consul-terraform-sync/assets/.DS_Store
+.DS_Store
+instruqt-tracks/workshop-consul-terraform-sync/assets/terraform/panw/TODO.md
+.gitignore
+instruqt-tracks/workshop-consul-terraform-sync/assets/terraform/panw-vm/TODO.md

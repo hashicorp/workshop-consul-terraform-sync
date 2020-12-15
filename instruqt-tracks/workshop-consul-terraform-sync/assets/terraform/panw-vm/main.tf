@@ -27,6 +27,14 @@ data "terraform_remote_state" "bootstrap" {
   }
 }
 
+resource "azurerm_storage_account" "PAN_FW_STG_AC" {
+  name                     = var.StorageAccountName
+  location                 = data.terraform_remote_state.vnet.outputs.resource_group_location
+  resource_group_name      = data.terraform_remote_state.vnet.outputs.resource_group_name
+  account_replication_type = "LRS"
+  account_tier             = "Standard" 
+}
+
 ## START Firewall VM-Series ##
 resource "azurerm_public_ip" "PublicIP_0" {
   name                = var.fwpublicIPName

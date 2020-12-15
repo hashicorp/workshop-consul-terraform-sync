@@ -1,4 +1,10 @@
 ##Bootstrap
+variable "StorageAccountName" {
+  default     = ""
+  description = "The name of the storage account"
+  type        = string
+}
+
 variable "hostname" {
   default     = ""
   description = "The hostname of the VM-series instance"
