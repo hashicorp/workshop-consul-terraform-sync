@@ -412,7 +412,7 @@ challenges:
 
     When complete, connect to the image
     ```
-    consul_terraform_sync=$(curl -s $CONSUL_HTTP_ADDR/v1/catalog/node/consul-terraform-sync-000001 | jq -r '.Node.Address')
+    consul_terraform_sync=$(curl -s $CONSUL_HTTP_ADDR/v1/catalog/node/consul-terraform-sync | jq -r '.Node.Address')
     ssh -q -A -J azure-user@$bastion_ip azure-user@$consul_terraform_sync
     ```
 
@@ -438,6 +438,10 @@ challenges:
     hostname: workstation
     path: /
     port: 80
+  - title: Terraform Code
+    type: code
+    hostname: workstation
+    path: /root/terraform/consul-terraform-sync
   - title: Current lab setup
     type: website
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
@@ -688,4 +692,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "4370980897454925586"
+checksum: "8454424332353112260"
