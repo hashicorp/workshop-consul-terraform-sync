@@ -5,6 +5,16 @@ variable "StorageAccountName" {
   type        = string
 }
 
+variable "adminUsername" {
+  default = ""
+  type    = string
+}
+
+variable "adminPassword" {
+  default = ""
+  type    = string
+}
+
 variable "hostname" {
   default     = ""
   description = "The hostname of the VM-series instance"

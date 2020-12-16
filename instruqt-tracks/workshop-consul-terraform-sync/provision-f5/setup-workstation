@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set-workdir /root/terraform/bigip
+set-workdir /root/terraform/panw-vm
 
 az vm image terms accept --urn paloaltonetworks:vmseries1:bundle1:latest
 
