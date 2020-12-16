@@ -63,7 +63,14 @@ challenges:
     hcs-vnet: 10.0.0.0/16
     shared-svcs-vnet: 10.2.0.0/16
     app-vnet: 10.3.0.0/16
-    dmz-vnet: 10.4.0.0/16
+    ```
+
+    app-vnet subnets:
+    ```
+    MGMT: 10.3.1.0/24
+    INTERNET: 10.3.2.0/24
+    DMZ: 10.3.3.0/24
+    APP: 10.3.4.0/24
     ```
 
     You will leverage these VNet in the next few assignments.
@@ -681,4 +688,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "803090184390426358"
+checksum: "4370980897454925586"
