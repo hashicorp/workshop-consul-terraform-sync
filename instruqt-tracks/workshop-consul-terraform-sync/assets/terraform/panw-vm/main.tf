@@ -19,14 +19,6 @@ data "terraform_remote_state" "vnet" {
   }
 }
 
-data "terraform_remote_state" "bootstrap" {
-  backend = "local"
-
-  config = {
-    path = "../panw-bootstrap/terraform.tfstate"
-  }
-}
-
 resource "azurerm_storage_account" "PAN_FW_STG_AC" {
   name                     = var.StorageAccountName
   location                 = data.terraform_remote_state.vnet.outputs.resource_group_location
@@ -35,7 +27,6 @@ resource "azurerm_storage_account" "PAN_FW_STG_AC" {
   account_tier             = "Standard" 
 }
 
-## START Firewall VM-Series ##
 resource "azurerm_public_ip" "PublicIP_0" {
   name                = var.fwpublicIPName
   location            = data.terraform_remote_state.vnet.outputs.resource_group_location
@@ -138,7 +129,9 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
   depends_on = [azurerm_network_interface.VNIC0,
                 azurerm_network_interface.VNIC1,
                 azurerm_network_interface.VNIC2,
-                azurerm_network_interface.VNIC3
+                azurerm_network_interface.VNIC3,
+                azurerm_public_ip.PublicIP_0,
+                azurerm_public_ip.PublicIP_1
                 ]
   plan {
     name      = var.fwSku
@@ -155,7 +148,7 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
 
   storage_os_disk {
     name          = join("", list(var.FirewallVmName, "-osDisk"))
-    vhd_uri       = "${data.terraform_remote_state.bootstrap.outputs.primary_blob_endpoint}vhds/${var.FirewallVmName}-${var.fwOffer}-${var.fwSku}.vhd"
+    vhd_uri       = "${azurerm_storage_account.PAN_FW_STG_AC.primary_blob_endpoint}vhds/${var.FirewallVmName}-${var.fwOffer}-${var.fwSku}.vhd"
     caching       = "ReadWrite"
     create_option = "FromImage"
   }
@@ -164,14 +157,6 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
     computer_name  = var.FirewallVmName
     admin_username = var.adminUsername
     admin_password = var.adminPassword
-    custom_data = base64encode(join(
-      ",",
-      [
-        "storage-account=${data.terraform_remote_state.bootstrap.outputs.storage_account_name}",
-        "access-key=${data.terraform_remote_state.bootstrap.outputs.primary_access_key}",
-        "file-share=${data.terraform_remote_state.bootstrap.outputs.bootstrap_share_name}"
-      ],
-    ))
   }
 
   primary_network_interface_id = azurerm_network_interface.VNIC0.id
@@ -185,5 +170,3 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
     disable_password_authentication = false
   }
 }
-
-## END Firewall VM-Series ##

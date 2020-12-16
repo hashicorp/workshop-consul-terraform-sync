@@ -7,12 +7,20 @@ terraform {
   }
 }
 
-provider "panos" {
-  hostname = "127.0.0.1"
-  username = "admin"
-  password = "secret"
+data "terraform_remote_state" "panw-vm" {
+  backend = "local"
+
+  config = {
+    path = "../panw-vm/terraform.tfstate"
+  }
 }
 
+
+provider "panos" {
+  hostname = data.terraform_remote_state.panw-vm.outputs.FirewallIP
+  username = var.adminUsername
+  password = var.adminPassword
+}
 
 # Virtual router
 
