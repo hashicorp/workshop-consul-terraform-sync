@@ -4,9 +4,6 @@ set -e
 
 set-workdir /root/terraform/app
 
-cd /root/terraform/bigip
-terraform output > /info.txt
-
 cd /root/terraform/app
 terraform init
 

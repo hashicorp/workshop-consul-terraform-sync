@@ -3,6 +3,12 @@
 
 set-workdir /root/terraform/panw-config
 
+cd /root/terraform/bigip
+terraform output > /info.txt
+
+cd /root/terraform/panw-vm
+terraform output >> /info.txt
+
 cd /root/terraform/panw-config
 terraform init
 

@@ -31,7 +31,7 @@ resource "azurerm_public_ip" "PublicIP_0" {
   name                = var.fwpublicIPName
   location            = data.terraform_remote_state.vnet.outputs.resource_group_location
   resource_group_name = data.terraform_remote_state.vnet.outputs.resource_group_name
-  allocation_method   = var.publicIPAddressType
+  allocation_method   = "Static"
   domain_name_label   = var.FirewallDnsName
 }
 
@@ -39,7 +39,7 @@ resource "azurerm_public_ip" "PublicIP_1" {
   name                = var.WebPublicIPName
   location            = data.terraform_remote_state.vnet.outputs.resource_group_location
   resource_group_name = data.terraform_remote_state.vnet.outputs.resource_group_name
-  allocation_method   = var.publicIPAddressType
+  allocation_method   = "Static"
   domain_name_label   = var.WebServerDnsName
 }
 
