@@ -5,19 +5,12 @@ sleep 10
 rg=$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)
 
 #check resources
-echo "checking Vault..."
+echo "Checking Vault..."
 status=$(az vm show -g "${rg}" --name vault-vm | jq -r '.provisioningState')
 if [ "${status}" != "Creating" ] && [ "${status}" != "Updating" ] && [ "${status}" != "Succeeded" ] ; then
   fail-message "Vault is not provisioning/provisioned. Wait a few moments and try again. Current state is: ${status}"
   exit 1
 fi
-
-#echo "checking AKS cluster..."
-#status=$(az aks show -g "${rg}" --name aks | jq -r '.provisioningState')
-#if [ "${status}" != "Creating" ] && [ "${status}" != "Updating" ] && [ "${status}" != "Succeeded" ] ; then
-#  fail-message "AKS cluster is not provisioning/provisioned. Wait a few moments and try again. Current state is: ${status}"
-#  exit 1
-#fi
 
 echo "Checking HCS..."
 if [ ! -f /root/terraform/hcs/terraform.out ]; then

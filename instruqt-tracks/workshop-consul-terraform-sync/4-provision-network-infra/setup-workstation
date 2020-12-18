@@ -7,7 +7,6 @@ az vm image terms accept --urn paloaltonetworks:vmseries1:bundle1:latest
 cd /root/terraform/panw-vm
 terraform init
 
-
 cd /root/terraform/bigip
 terraform init
 

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+cd /root/terraform/panw-vm
+nohup terraform apply -auto-approve > /root/terraform/panw-vm/terraform.out &
+
 cd /root/terraform/bigip
 terraform apply -refresh=false -auto-approve > /root/terraform/bigip/terraform.out
 

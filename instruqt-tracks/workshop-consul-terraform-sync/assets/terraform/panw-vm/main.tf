@@ -19,6 +19,16 @@ data "terraform_remote_state" "vnet" {
   }
 }
 
+resource "random_password" "pafwpassword" {
+  length           = random_integer.password-length.result
+  min_upper        = 1
+  min_lower        = 1
+  min_numeric      = 1
+  min_special      = 1
+  special          = true
+  override_special = "_%@"
+}
+
 resource "azurerm_storage_account" "PAN_FW_STG_AC" {
   name                     = var.StorageAccountName
   location                 = data.terraform_remote_state.vnet.outputs.resource_group_location
@@ -156,7 +166,7 @@ resource "azurerm_virtual_machine" "PAN_FW_FW" {
   os_profile {
     computer_name  = var.FirewallVmName
     admin_username = var.adminUsername
-    admin_password = var.adminPassword
+    admin_password = random_password.pafwpassword.result
   }
 
   primary_network_interface_id = azurerm_network_interface.VNIC0.id

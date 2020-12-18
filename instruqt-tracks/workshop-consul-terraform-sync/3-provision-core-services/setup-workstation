@@ -2,9 +2,6 @@
 
 set-workdir /root/terraform
 
-cd /root/terraform/aks
-terraform init
-
 cd /root/terraform/vault
 terraform init
 
