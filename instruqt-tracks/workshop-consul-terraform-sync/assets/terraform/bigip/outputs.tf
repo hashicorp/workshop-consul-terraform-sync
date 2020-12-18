@@ -11,11 +11,11 @@ output "app_url" {
   value = "http://${azurerm_public_ip.sip_public_ip.ip_address}:8080/"
 }
 
-output "username" {
+output "f5_username" {
   value = var.admin_username
 }
 
-output "admin_password" {
+output "f5_password" {
   value = random_password.bigippassword.result
 }
 

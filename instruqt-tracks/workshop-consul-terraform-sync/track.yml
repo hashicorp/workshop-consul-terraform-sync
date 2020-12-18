@@ -18,8 +18,9 @@ developers:
 private: true
 published: true
 show_timer: true
+skipping_enabled: true
 challenges:
-- slug: review-lab-objectives
+- slug: 1-review-lab-objectives
   id: rihjzbfzsm9m
   type: challenge
   title: Review Lab Objectives
@@ -41,7 +42,7 @@ challenges:
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C1-With_CTS.html
   difficulty: basic
   timelimit: 300
-- slug: provision-azure-vnets
+- slug: 2-provision-azure-vnets
   id: y1cns7c1xooc
   type: challenge
   title: Provision Azure VNETs
@@ -53,7 +54,6 @@ challenges:
 
     In the `Shell` tab run the following commands.
     ```
-    cd /root/terraform/vnet
     terraform plan
     terraform apply -auto-approve
     ```
@@ -97,7 +97,7 @@ challenges:
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C2-Provision_VNETs.html
   difficulty: basic
   timelimit: 3000
-- slug: provision-core-services
+- slug: 3-provision-core-services
   id: 8g5r3gchzqun
   type: challenge
   title: Provision Core Services
@@ -136,7 +136,7 @@ challenges:
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C3-Provision_Core_Svcs.html
   difficulty: basic
   timelimit: 3000
-- slug: provision-f5
+- slug: 4-provision-network-infra
   id: fbyphtsxladi
   type: challenge
   title: Provision F5 BIG-IP & Palo Alto Firewall
@@ -182,19 +182,20 @@ challenges:
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C4-Provision_BIG-IP.html
   difficulty: basic
   timelimit: 3000
-- slug: configure-palo-alto-firewall
+- slug: 5-configure-palo-alto-firewall
   id: fyfegnx6ag8o
   type: challenge
   title: Configure Palo Alto Firewall
   teaser: Provision a Palo Alto VM-Series Firewall using Terraform.
   assignment: "Now we will configure the Palo Alto Firewall using Terraform.\n\n First,
-    let's verify that the Palo Alto VM Series has been instanciated.\n ```/root/terraform/panw-vm/terraform.out```\n
-    In the `Shell` tab run the following commands.\n\n```\nterraform plan\nterraform
-    apply -auto-approve\n```\n\nThis can take several minutes to complete, while you
-    are waiting \ntake the opportunity to review the `Terraform Code` tab to see the\nIaC
-    definition.\n\nOnce the apply is complete, you can Navigate to the Palo Alto Firewall\nat
-    the IP address in the Terraform output.\n\nFor CLI access:\n ```\nssh -q -A -J
-    azure-user@$bastion_ip paloalto@$firewall_ip\n```"
+    let's verify that the Palo Alto VM Series has been instanciated.\n In the `Shell`
+    tab run the following commands.\n\n ```\ntail /root/terraform/panw-vm/terraform.out\n```\n\n
+    You should see `Apple complete!`. If so, proceed with the following commands:\n\n
+    ```\nterraform plan\nterraform apply -auto-approve\n```\n\nThis can take several
+    minutes to complete, while you are waiting \ntake the opportunity to review the
+    `Terraform Code` tab to see the\nIaC definition.\n\nOnce the apply is complete,
+    you can Navigate to the Palo Alto Firewall\nat the IP address in the Terraform
+    output.\n\nFor CLI access:\n ```\nssh -q -A -J azure-user@$bastion_ip paloalto@$firewall_ip\n```"
   notes:
   - type: text
     contents: Replace this text with your own text
@@ -211,12 +212,16 @@ challenges:
     type: code
     hostname: workstation
     path: /root/terraform/panw-config
+  - title: App Access Info
+    type: code
+    hostname: workstation
+    path: /info.txt
   - title: Provision PANW
     type: website
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C5-Provision_PANW_FW.html
   difficulty: basic
   timelimit: 300
-- slug: validate-hcs
+- slug: 6-validate-hcs
   id: z5sy2diwt2hl
   type: challenge
   title: Validate HCS
@@ -332,7 +337,7 @@ challenges:
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C5-Provision_PANW_FW.html
   difficulty: basic
   timelimit: 3000
-- slug: deploy-app-environments
+- slug: 7-deploy-app-environments
   id: k0reagnnfzuc
   type: challenge
   title: Deploy App environments
@@ -395,7 +400,7 @@ challenges:
     port: 8080
   difficulty: basic
   timelimit: 3000
-- slug: install-consul-terraform-sync
+- slug: 8-install-consul-terraform-sync
   id: jskeddctb13s
   type: challenge
   title: Deploy 'Consul Terraform Sync'
@@ -464,7 +469,7 @@ challenges:
     path: /info.txt
   difficulty: basic
   timelimit: 3000
-- slug: review-app-environment
+- slug: 9-review-app-environment
   id: hbbtrye3yi1b
   type: challenge
   title: Review app environment
@@ -586,7 +591,7 @@ challenges:
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
   difficulty: basic
   timelimit: 3000
-- slug: scale-the-application
+- slug: 10-scale-the-application
   id: tjlwihpjo0s9
   type: challenge
   title: Scale the application
@@ -692,4 +697,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "8454424332353112260"
+checksum: "7995028092939918782"

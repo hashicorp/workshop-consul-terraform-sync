@@ -18,8 +18,8 @@ data "terraform_remote_state" "panw-vm" {
 
 provider "panos" {
   hostname = data.terraform_remote_state.panw-vm.outputs.FirewallIP
-  username = var.adminUsername
-  password = var.adminPassword
+  username = data.terraform_remote_state.panw-vm.outputs.pa_username
+  password = data.terraform_remote_state.panw-vm.outputs.pa_password
 }
 
 # Virtual router

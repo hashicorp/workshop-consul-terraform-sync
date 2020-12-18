@@ -17,3 +17,11 @@ output "WebIP" {
 output "WebFQDN" {
   value = join("", list("http://", azurerm_public_ip.PublicIP_1.fqdn))
 }
+
+output "pa_username" {
+  value = var.adminUsername
+}
+
+output "pa_password" {
+  value = random_password.pafwpassword.result
+}
