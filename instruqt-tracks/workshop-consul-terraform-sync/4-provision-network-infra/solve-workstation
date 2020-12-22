@@ -8,5 +8,10 @@ terraform apply -refresh=false -auto-approve > /root/terraform/bigip/terraform.o
 
 #block HCS
 while [ -f /root/terraform/hcs/.terraform.tfstate.lock.info ]; do echo 'hcs still provisioning'; sleep 5;  done
+
+#block PANW FW
+while [ -f /root/terraform/panw-vm/.terraform.tfstate.lock.info ]; do echo 'PANW still provisioning'; sleep 5;  done
+
 sleep 30
 exit 0
+

@@ -15,29 +15,6 @@ data "terraform_remote_state" "panw-vm" {
   }
 }
 
-
-provider "panos" {
-  hostname = data.terraform_remote_state.panw-vm.outputs.FirewallIP
-  username = data.terraform_remote_state.panw-vm.outputs.pa_username
-  password = data.terraform_remote_state.panw-vm.outputs.pa_password
-}
-terraform {
-  required_providers {
-    panos = {
-      source  = "PaloAltoNetworks/panos"
-      version = "1.6.3"
-    }
-  }
-}
-
-data "terraform_remote_state" "panw-vm" {
-  backend = "local"
-
-  config = {
-    path = "../panw-vm/terraform.tfstate"
-  }
-}
-
 provider "panos" {
   hostname = data.terraform_remote_state.panw-vm.outputs.FirewallIP
   username = data.terraform_remote_state.panw-vm.outputs.pa_username
@@ -83,6 +60,7 @@ resource "panos_ethernet_interface" "ethernet1_1" {
   enable_dhcp        = true
   management_profile = "allow-ping"
   comment            = "Internet interface"
+  depends_on         = [panos_management_profile.allow_ping_mgmt_profile]
 }
 
 resource "panos_zone" "internet_zone" {
@@ -106,6 +84,7 @@ resource "panos_ethernet_interface" "ethernet1_2" {
   enable_dhcp        = true
   management_profile = "allow-ping"
   comment            = "DMZ interface"
+  depends_on         = [panos_management_profile.allow_ping_mgmt_profile]
 }
 
 resource "panos_zone" "dmz_zone" {
@@ -129,6 +108,7 @@ resource "panos_ethernet_interface" "ethernet1_3" {
   enable_dhcp        = true
   management_profile = "allow-ping"
   comment            = "Application interface"
+  depends_on         = [panos_management_profile.allow_ping_mgmt_profile]
 }
 
 resource "panos_zone" "app_zone" {
