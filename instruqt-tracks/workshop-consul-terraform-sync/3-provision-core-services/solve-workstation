@@ -5,7 +5,7 @@ nohup terraform apply -refresh=false -auto-approve > /root/terraform/vault/terra
 sleep 10
 
 cd /root/terraform/hcs
-nohup terraform apply -refresh=false -auto-approve > /root/terraform/hcs/terraform.out &
-sleep 10
+terraform apply -refresh=false -auto-approve > /root/terraform/hcs/terraform.out
+sleep 120
 
 exit 0

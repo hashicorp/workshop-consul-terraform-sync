@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sleep 10
-
 cd /root/terraform/vnet
 terraform apply -auto-approve > /root/terraform/vnet/terraform.out
 

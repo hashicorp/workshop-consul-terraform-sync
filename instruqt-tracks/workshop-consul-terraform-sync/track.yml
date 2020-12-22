@@ -409,8 +409,6 @@ challenges:
   assignment: |2-
 
     ```
-    cd /root/terraform/consul-terraform-sync
-    terraform init
     terraform plan
     terraform apply -auto-approve
     ```
@@ -697,4 +695,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "17498569332615992427"
+checksum: "3219618305626043290"

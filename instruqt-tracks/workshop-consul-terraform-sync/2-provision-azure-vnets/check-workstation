@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sleep 10
+
 echo "Verifying Azure VNETs"
 
 rg=$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)
