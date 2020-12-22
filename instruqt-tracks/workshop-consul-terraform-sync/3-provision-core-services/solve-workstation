@@ -1,12 +1,12 @@
 #!/bin/bash
 
-echo ">> Deploying Vault"
+echo "\n\n>> Deploying Vault\n"
 
 cd /root/terraform/vault
 nohup terraform apply -refresh=false -auto-approve > /root/terraform/vault/terraform.out &
 sleep 10
 
-echo ">> Deploying HCS cluster"
+echo "\n\n>> Deploying HCS cluster\n"
 
 cd /root/terraform/hcs
 terraform apply -refresh=false -auto-approve > /root/terraform/hcs/terraform.out

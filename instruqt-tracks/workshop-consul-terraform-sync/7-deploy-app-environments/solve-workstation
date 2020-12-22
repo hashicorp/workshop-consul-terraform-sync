@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo ">> Deploying application"
+echo "\n\n>> Deploying application\n"
 
 cd /root/terraform/app
 terraform apply -auto-approve > /root/terraform/app/terraform.out
