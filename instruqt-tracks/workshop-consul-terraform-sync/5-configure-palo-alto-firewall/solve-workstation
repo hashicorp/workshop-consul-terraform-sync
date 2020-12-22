@@ -10,6 +10,9 @@
 # for more information.
 #
 
-echo "This is the solve script"
+echo ">> Configuring Palo Alto Firewall"
+
+cd /root/terraform/panw-config
+terraform apply -refresh=false -auto-approve > /root/terraform/panw-config/terraform.out
 
 exit 0
