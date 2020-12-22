@@ -1,6 +1,9 @@
 #!/bin/bash
 
-echo "\n\n>> Installing Consul Terraform Sync\n"
+echo ""
+echo ">>"
+echo ">> Installing Consul Terraform Sync"
+echo ">>"
 
 cd /root/terraform/consul-tf-sync
 terraform apply -auto-approve > /root/terraform/consul-tf-sync/terraform.out

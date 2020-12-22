@@ -138,8 +138,6 @@ sudo service consul start
 sudo service consul status
 
 #Enable the service
-sudo systemctl enable consul-terraform-sync
-sudo service consul-terraform-sync start
-sudo service consul-terraform-sync status
-
-
+sudo systemctl enable consul-tf-sync
+sudo service consul-tf-sync start
+sudo service consul-tf-sync status

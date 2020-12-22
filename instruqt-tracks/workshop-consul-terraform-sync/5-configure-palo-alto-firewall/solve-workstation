@@ -10,7 +10,13 @@
 # for more information.
 #
 
-echo "\n\n>> Configuring Palo Alto Firewall\n"
+echo ""
+echo ">>"
+echo ">> Configuring Palo Alto Firewall"
+echo ">>"
+
+#let it finish booting.
+sleep 30
 
 cd /root/terraform/panw-config
 terraform apply -refresh=false -auto-approve > /root/terraform/panw-config/terraform.out

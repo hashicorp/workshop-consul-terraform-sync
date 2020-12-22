@@ -109,7 +109,7 @@ cat << EOF > /etc/consul.d/nginx.json
     "meta":
       {
         "AS3TMPL": "http",
-        "VSIP": "${bigip_mgmt_addr}",
+        "VSIP": "${vip_internal_address}",
         "VSPORT": "9090"
       },
     "checks": [

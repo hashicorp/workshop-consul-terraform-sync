@@ -1,11 +1,17 @@
 #!/bin/bash
 
-echo "\n\n>> Deploying PANW FW VM\n"
+echo ""
+echo ">>"
+echo ">> Deploying PANW FW VM"
+echo ">>"
 
 cd /root/terraform/panw-vm
 nohup terraform apply -auto-approve > /root/terraform/panw-vm/terraform.out &
 
-echo "\n\n>> Deploying BIG-IP VM\n"
+echo ""
+echo ">>"
+echo ">> Deploying BIG-IP VM"
+echo ">>"
 
 cd /root/terraform/bigip
 terraform apply -refresh=false -auto-approve > /root/terraform/bigip/terraform.out
