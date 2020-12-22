@@ -141,5 +141,3 @@ sudo service consul status
 sudo systemctl enable consul-tf-sync
 sudo service consul-tf-sync start
 sudo service consul-tf-sync status
-
-

@@ -49,7 +49,7 @@ ${ca_cert}
 EOT
 consul_token = "${token}"
 bigip_mgmt_addr = "${bigip_mgmt_addr}"
-vip_internal_address = "${vip_internal_address}
+vip_internal_address = "${vip_internal_address}"
 EOF
 
 
