@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo ">> Validating HCS"
+
 echo $CONSUL_HTTP_ADDR
 echo $VAULT_ADDR
 bootstrap_token=$(az hcs create-token --resource-group $(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name) --name hcs | jq  -r .masterToken.secretId)

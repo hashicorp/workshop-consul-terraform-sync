@@ -1,13 +1,10 @@
 #!/bin/bash
 
+echo ">> Deploying application"
+
 cd /root/terraform/app
 terraform apply -auto-approve > /root/terraform/app/terraform.out
 
 sleep 120
 
-cd /root/terraform/app/as3
-terraform apply -auto-approve >  /root/terraform/app/as3/terraform.out
-
-sleep 60
-
-exit 0 
+exit 0

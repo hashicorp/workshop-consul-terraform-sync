@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo ">> Deploying Azure VNETs"
+
 cd /root/terraform/vnet
 terraform apply -auto-approve > /root/terraform/vnet/terraform.out
 
