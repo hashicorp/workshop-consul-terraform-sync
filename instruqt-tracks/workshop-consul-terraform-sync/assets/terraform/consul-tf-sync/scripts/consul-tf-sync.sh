@@ -115,6 +115,14 @@ task {
   providers = ["bigip"]
   services = ["web", "app"]
 }
+task {
+  name = "DAG_Web_App" # eg. "Create_DAG_on_PANOS1"
+  description = "Automate population of dynamic address group" # eg. "Dynamic Address Groups based on service definition"
+  source = "devarshishah3/dag-nia/panos" # to be updated
+  providers = ["panos.panos1"]
+  services = ["web"] # eg. ["web", "api"]
+  # variable_files = ["<list of files that have user variables for this module (please input full path)>"] # eg. ["/opt/panw-config/user-demo.tfvars"]
+}
 driver "terraform" {
   log = true
   path = "/opt/consul-tf-sync.d/"
@@ -122,6 +130,9 @@ driver "terraform" {
   required_providers {
     bigip = {
       source = "F5Networks/bigip"
+    },
+    panos = {
+      source = "PaloAltoNetworks/panos"
     }
   }
 }
@@ -129,6 +140,11 @@ provider "bigip" {
   address = "${bigip_mgmt_addr}:8443"
   username = "${bigip_admin_user}"
   password = "${bigip_admin_passwd}"
+}
+provider "panos" {
+  alias = "panos1" 
+  hostname = "<panos_address>" # eg. "2.2.2.2"
+  api_key  = "<api_key>" 
 }
 EOF
 

@@ -427,7 +427,7 @@ challenges:
 
     Review the terraform-consul-sync service status with the following command
     ```
-    service consul-terraform-sync status
+    service consul-tf-sync status
     ```
 
     Move to the next assignment when they are ready.
@@ -695,4 +695,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "11554401119742943419"
+checksum: "4697669191647254273"
