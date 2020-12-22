@@ -24,9 +24,9 @@ sudo mv consul-terraform-sync /usr/local/bin/
 #Create Consul Terraorm Sync User
 sudo useradd --system --home /etc/consul.d --shell /bin/false consul
 sudo mkdir --parents /opt/consul
-sudo mkdir --parents /opt/consul-terraform-sync.d
+sudo mkdir --parents /opt/consul-tf-sync.d
 sudo chown --recursive consul:consul /opt/consul 
-sudo chown --recursive consul:consul /opt/consul-terraform-sync.d
+sudo chown --recursive consul:consul /opt/consul-tf-sync.d
 
 #Create Systemd Config for Consul
 sudo cat << EOF > /etc/systemd/system/consul.service
@@ -50,7 +50,7 @@ WantedBy=multi-user.target
 EOF
 
 #Create Systemd Config for Consul Terraform Sync
-sudo cat << EOF > /etc/systemd/system/consul-terraform-sync.service
+sudo cat << EOF > /etc/systemd/system/consul-tf-sync.service
 [Unit]
 Description="HashiCorp Consul Terraform Sync - A Network Infra Automation solution"
 Documentation=https://www.consul.io/
@@ -60,7 +60,7 @@ After=network-online.target
 [Service]
 User=consul
 Group=consul
-ExecStart=/usr/local/bin/consul-terraform-sync -config-file=/etc/consul-terraform-sync.d/consul-terraform-sync.hcl
+ExecStart=/usr/local/bin/consul-terraform-sync -config-file=/etc/consul-tf-sync.d/consul-tf-sync.hcl
 KillMode=process
 Restart=always
 LimitNOFILE=65536
@@ -73,8 +73,8 @@ EOF
 sudo mkdir --parents /etc/consul.d
 sudo chown --recursive consul:consul /etc/consul.d
 
-sudo mkdir --parents /etc/consul-terraform-sync.d
-sudo chown --recursive consul:consul /etc/consul-terraform-sync.d
+sudo mkdir --parents /etc/consul-tf-sync.d
+sudo chown --recursive consul:consul /etc/consul-tf-sync.d
 
 cat << EOF > /etc/consul.d/ca.pem
 ${ca_cert}
@@ -98,7 +98,7 @@ acl = {
 }
 EOF
 
-cat << EOF > /etc/consul-terraform-sync.d/consul-terraform-sync.hcl
+cat << EOF > /etc/consul-tf-sync.d/consul-tf-sync.hcl
 log_level = "info"
 consul {
   address = "localhost:8500"
@@ -117,8 +117,8 @@ task {
 }
 driver "terraform" {
   log = true
-  path = "/opt/consul-terraform-sync.d/"
-  working_dir = "/opt/consul-terraform-sync.d/"
+  path = "/opt/consul-tf-sync.d/"
+  working_dir = "/opt/consul-tf-sync.d/"
   required_providers {
     bigip = {
       source = "F5Networks/bigip"

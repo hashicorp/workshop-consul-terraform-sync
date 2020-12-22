@@ -422,7 +422,7 @@ challenges:
     Take a look at the `consul-terraform-sync` configuration
 
     ```
-    cat /etc/consul-terraform-sync.d/consul-terraform-sync.hcl
+    cat /etc/consul-tf-sync.d/consul-tf-sync.hcl
     ```
 
     Review the terraform-consul-sync service status with the following command
@@ -444,7 +444,7 @@ challenges:
   - title: Terraform Code
     type: code
     hostname: workstation
-    path: /root/terraform/consul-terraform-sync
+    path: /root/terraform/consul-tf-sync
   - title: Current lab setup
     type: website
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
@@ -695,4 +695,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "17770264161307691024"
+checksum: "424379656296254607"
