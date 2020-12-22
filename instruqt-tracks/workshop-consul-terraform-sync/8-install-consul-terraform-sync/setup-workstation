@@ -10,7 +10,7 @@ bastion_ip=$(terraform output -state /root/terraform/vnet/terraform.tfstate bast
 echo "export bastion_ip=${bastion_ip}" >> ~/.bashrc
 
 # From git clone https://github.com/hashicorp/workshop-consul-terraform-sync.git
-cd /root/terraform/consul-terraform-sync/
+cd /root/terraform/consul-tf-sync/
 terraform init
 
 ##creds
@@ -21,10 +21,10 @@ consulconfig=$(az resource show --ids "/subscriptions/$(az account show | jq -r 
 ca_cert=$(az resource show --ids "/subscriptions/$(az account show | jq -r .id)/resourceGroups/$(terraform output -state /root/terraform/vnet/terraform.tfstate resource_group_name)/providers/Microsoft.Solutions/applications/hcs/customconsulClusters/hashicorp-consul-cluster" --api-version 2018-09-01-preview | jq -r .properties.consulCaFile | base64 -d)
 token=$(vault kv get -field=master_token secret/consul)
 bigip_mgmt_addr=$(terraform output -state=/root/terraform/bigip/terraform.tfstate mgmt_ip)
-bigip_admin_user=$(terraform output -state=/root/terraform/bigip/terraform.tfstate username)
-bigip_admin_passwd=$(terraform output -state=/root/terraform/bigip/terraform.tfstate admin_password)
+bigip_admin_user=$(terraform output -state=/root/terraform/bigip/terraform.tfstate f5_username)
+bigip_admin_passwd=$(terraform output -state=/root/terraform/bigip/terraform.tfstate f5_password)
 
-cat << EOF > /root/terraform/consul-terraform-sync/terraform.tfvars
+cat << EOF > /root/terraform/consul-tf-sync/terraform.tfvars
 ssh_public_key = "$(cat ~/.ssh/id_rsa.pub)"
 endpoint = "${endpoint}"
 consulconfig = <<-EOT

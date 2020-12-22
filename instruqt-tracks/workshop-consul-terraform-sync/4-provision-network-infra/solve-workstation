@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo ">> Deploying PANW FW VM"
+echo "\n\n>> Deploying PANW FW VM\n"
 
 cd /root/terraform/panw-vm
 nohup terraform apply -auto-approve > /root/terraform/panw-vm/terraform.out &
 
-echo ">> Deploying BIG-IP VM"
+echo "\n\n>> Deploying BIG-IP VM\n"
 
 cd /root/terraform/bigip
 terraform apply -refresh=false -auto-approve > /root/terraform/bigip/terraform.out
@@ -18,4 +18,3 @@ while [ -f /root/terraform/panw-vm/.terraform.tfstate.lock.info ]; do echo 'PANW
 
 sleep 30
 exit 0
-

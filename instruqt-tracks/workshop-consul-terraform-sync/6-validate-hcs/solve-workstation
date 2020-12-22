@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo ">> Validating HCS"
+echo "\n\n>> Validating HCS\n"
 
 echo $CONSUL_HTTP_ADDR
 echo $VAULT_ADDR
