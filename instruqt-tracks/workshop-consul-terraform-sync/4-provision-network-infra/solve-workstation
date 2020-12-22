@@ -18,4 +18,3 @@ while [ -f /root/terraform/panw-vm/.terraform.tfstate.lock.info ]; do echo 'PANW
 
 sleep 30
 exit 0
-
