@@ -24,9 +24,9 @@ bigip_mgmt_addr=$(terraform output -state=/root/terraform/bigip/terraform.tfstat
 bigip_admin_user=$(terraform output -state=/root/terraform/bigip/terraform.tfstate f5_username)
 bigip_admin_passwd=$(terraform output -state=/root/terraform/bigip/terraform.tfstate f5_password)
 vip_internal_address=$(terraform output -state=/root/terraform/bigip/terraform.tfstate vip_internal_address)
-pa_mgmt_addr=$(terraform output -state=/root/terraform/panw-config/terraform.tfstate FirewallIP)
-pa_username=$(terraform output -state=/root/terraform/panw-config/terraform.tfstate pa_username)
-pa_password=$(terraform output -state=/root/terraform/panw-config/terraform.tfstate pa_password)
+pa_mgmt_addr=$(terraform output -state=/root/terraform/panw-vm/terraform.tfstate FirewallIP)
+pa_username=$(terraform output -state=/root/terraform/panw-vm/terraform.tfstate pa_username)
+pa_password=$(terraform output -state=/root/terraform/panw-vm/terraform.tfstate pa_password)
 
 cat << EOF > /root/terraform/consul-tf-sync/terraform.tfvars
 ssh_public_key = "$(cat ~/.ssh/id_rsa.pub)"
