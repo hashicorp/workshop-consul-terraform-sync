@@ -116,11 +116,11 @@ task {
   services = ["web", "app"]
 }
 task {
-  name = "DAG_Web_App" # eg. "Create_DAG_on_PANOS1"
-  description = "Automate population of dynamic address group" # eg. "Dynamic Address Groups based on service definition"
-  source = "devarshishah3/dag-nia/panos" # to be updated
+  name = "DAG_Web_App"
+  description = "Automate population of dynamic address group"
+  source = "PaloAltoNetworks/ag-dag-nia/panos"
   providers = ["panos.panos1"]
-  services = ["web"] # eg. ["web", "api"]
+  services = ["web"]
   # variable_files = ["<list of files that have user variables for this module (please input full path)>"] # eg. ["/opt/panw-config/user-demo.tfvars"]
 }
 driver "terraform" {
@@ -142,9 +142,11 @@ provider "bigip" {
   password = "${bigip_admin_passwd}"
 }
 provider "panos" {
-  alias = "panos1" 
-  hostname = "<panos_address>" # eg. "2.2.2.2"
-  api_key  = "<api_key>" 
+  alias = "panos1"
+  hostname = "${pa_mgmt_addr}"
+#  api_key  = "<api_key>"
+  username = "${pa_username}"
+  password = "${pa_password}"
 }
 EOF
 

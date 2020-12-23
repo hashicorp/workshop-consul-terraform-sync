@@ -191,7 +191,9 @@ challenges:
     let's verify that the Palo Alto VM Series has been instanciated.\n In the `Shell`
     tab run the following commands.\n\n ```\ntail /root/terraform/panw-vm/terraform.out\n```\n\n
     You should see `Apple complete!`. If so, proceed with the following commands:\n\n
-    ```\nterraform plan\nterraform apply -auto-approve\n```\n\nThis can take several
+    ```\nterraform plan\nterraform apply -auto-approve\n```\n\nNow we must instrut
+    the firewall to `commit` this change\n```\n/root/terraform/panos_commit/panos-commit
+    -config /root/terraform/panos_commit/panos-commit.json\n```\n\nThis can take several
     minutes to complete, while you are waiting \ntake the opportunity to review the
     `Terraform Code` tab to see the\nIaC definition.\n\nOnce the apply is complete,
     you can Navigate to the Palo Alto Firewall\nat the IP address in the Terraform
@@ -695,4 +697,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "4697669191647254273"
+checksum: "17215601206983731419"

@@ -14,3 +14,6 @@ variable "web_count" {
 variable "bigip_mgmt_addr" {}
 variable "bigip_admin_user" {}
 variable "bigip_admin_passwd" {}
+variable "pa_mgmt_addr" {}
+variable "pa_username" {}
+variable "pa_password" {}
