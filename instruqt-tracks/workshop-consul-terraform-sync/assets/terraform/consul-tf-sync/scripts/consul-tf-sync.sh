@@ -121,7 +121,7 @@ task {
   source = "PaloAltoNetworks/ag-dag-nia/panos"
   providers = ["panos.panos1"]
   services = ["web"]
-  # variable_files = ["<list of files that have user variables for this module (please input full path)>"] # eg. ["/opt/panw-config/user-demo.tfvars"]
+  variable_files = ["/etc/consul-tf-sync.d/panos.tfvars"]
 }
 driver "terraform" {
   log = true
@@ -143,11 +143,15 @@ provider "bigip" {
 }
 provider "panos" {
   alias = "panos1"
-  hostname = "${pa_mgmt_addr}"
+  hostname = "${panos_mgmt_addr}"
 #  api_key  = "<api_key>"
-  username = "${pa_username}"
-  password = "${pa_password}"
+  username = "${panos_username}"
+  password = "${panos_password}"
 }
+EOF
+
+cat << EOF > /etc/consul-tf-sync.d/panos.tfvars
+dag_prefix = "cts-addr-grp-"
 EOF
 
 #Enable the service

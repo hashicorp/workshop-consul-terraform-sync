@@ -24,7 +24,7 @@ cat << EOF > /root/terraform/panos_commit/panos-commit.json
     "hostname": "${firewall_ip}",
     "username": "${pa_username}",
     "password": "${pa_password}",
-    "sleep": 10
+    "sleep": 15
 }
 EOF
 

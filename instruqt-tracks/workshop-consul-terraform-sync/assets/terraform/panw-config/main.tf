@@ -130,6 +130,13 @@ resource "panos_zone_entry" "app_zone_ethernet1_3" {
   interface = panos_ethernet_interface.ethernet1_3.name
 }
 
+# Dynamic Address Group
+resource "panos_address_group" "cts-addr-grp-web" {
+    name = "cts-addr-grp-web"
+    description = "Consul Web Servers"
+    dynamic_match = "web"
+#    dynamic_match = "'web' and 'app'"  # Example of multi-tag
+}
 
 # NAT Rule
 
@@ -163,6 +170,11 @@ resource "panos_nat_rule_group" "app" {
 
 resource "panos_security_rule_group" "allow_app_traffic" {
   position_keyword = "top"
+  depends_on = [panos_service_object.service-9090,
+                panos_address_group.cts-addr-grp-web,
+                panos_zone.internet_zone,
+                panos_zone.dmz_zone,
+                panos_zone.app_zone]
   rule {
     name                  = "Allow traffic to BIG-IP"
     source_zones          = ["Internet"]
@@ -184,7 +196,7 @@ resource "panos_security_rule_group" "allow_app_traffic" {
     source_users          = ["any"]
     hip_profiles          = ["any"]
     destination_zones     = ["Application"]
-    destination_addresses = ["10.3.4.111"]
+    destination_addresses = ["cts-addr-grp-web"]
     applications          = ["any"]
     services              = ["service-http", "service-https", "service-9090"]
     categories            = ["any"]

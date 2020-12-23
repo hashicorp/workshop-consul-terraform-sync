@@ -14,6 +14,7 @@ variable "web_count" {
 variable "bigip_mgmt_addr" {}
 variable "bigip_admin_user" {}
 variable "bigip_admin_passwd" {}
-variable "pa_mgmt_addr" {}
-variable "pa_username" {}
-variable "pa_password" {}
+variable "panos_mgmt_addr" {}
+variable "panos_username" {}
+variable "panos_password" {}
+variable "vip_internal_address" {}
