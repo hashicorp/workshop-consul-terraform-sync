@@ -42,6 +42,14 @@ resource "panos_static_route_ipv4" "default_route" {
   interface      = panos_ethernet_interface.ethernet1_1.name
 }
 
+# Service Object for port 9090
+
+resource "panos_service_object" "service-9090" {
+    name = "service-9090"
+    vsys = "vsys1"
+    protocol = "tcp"
+    destination_port = "9090"
+}
 
 # Management interface profile
 
@@ -164,7 +172,7 @@ resource "panos_security_rule_group" "allow_app_traffic" {
     destination_zones     = ["DMZ"]
     destination_addresses = ["10.3.2.5"]
     applications          = ["any"]
-    services              = ["service-http", "service-https"]
+    services              = ["service-http", "service-https", "service-9090"]
     categories            = ["any"]
     action                = "allow"
     description           = "Allow app traffic from Internet to BIG-IP"
@@ -178,7 +186,7 @@ resource "panos_security_rule_group" "allow_app_traffic" {
     destination_zones     = ["Application"]
     destination_addresses = ["10.3.4.111"]
     applications          = ["any"]
-    services              = ["service-http", "service-https"]
+    services              = ["service-http", "service-https", "service-9090"]
     categories            = ["any"]
     action                = "allow"
     description           = "Allow app traffic from BIG-IP to app server"
