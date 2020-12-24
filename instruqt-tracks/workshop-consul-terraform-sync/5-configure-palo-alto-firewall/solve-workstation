@@ -21,4 +21,10 @@ sleep 30
 cd /root/terraform/panw-config
 terraform apply -refresh=false -auto-approve > /root/terraform/panw-config/terraform.out
 
+sleep 10
+
+# Commit the changes
+/root/terraform/panos_commit/panos-commit -config /root/terraform/panos_commit/panos-commit.json
+sleep 10
+
 exit 0

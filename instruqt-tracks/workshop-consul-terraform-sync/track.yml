@@ -576,7 +576,7 @@ challenges:
     type: service
     hostname: workstation
     path: /ui
-    port: 8080
+    port: 9090
   - title: Vault
     type: service
     hostname: workstation
@@ -697,4 +697,4 @@ challenges:
     path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "14475470908593863484"
+checksum: "11583476296787848862"
