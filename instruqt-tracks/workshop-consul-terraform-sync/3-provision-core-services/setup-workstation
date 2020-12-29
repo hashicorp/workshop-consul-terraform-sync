@@ -1,5 +1,11 @@
 #!/bin/bash
 
+echo ""
+echo ""
+echo ">>------------------------------<<"
+echo ">> Starting Core Services Setup <<"
+echo ">>------------------------------<<"
+
 set-workdir /root/terraform
 
 cd /root/terraform/vault
@@ -15,4 +21,11 @@ terraform init
 
 #import the marketplace agreement if it exists for some reason
 terraform import azurerm_marketplace_agreement.hcs "/subscriptions/${INSTRUQT_AZURE_SUBSCRIPTION_CONSUL_SUBSCRIPTION_ID}/providers/Microsoft.MarketplaceOrdering/agreements/hashicorp-4665790/offers/hcs-production/plans/on-demand-v2"
+
+echo ""
+echo ""
+echo ">>------------------------------<<"
+echo ">> Core Services Setup Complete <<"
+echo ">>------------------------------<<"
+
 exit 0

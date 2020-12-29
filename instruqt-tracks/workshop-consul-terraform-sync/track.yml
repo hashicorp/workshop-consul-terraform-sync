@@ -228,8 +228,7 @@ challenges:
   type: challenge
   title: Validate HCS
   teaser: Verify Vault, HCS, and Consul are operational
-  assignment: |2-
-
+  assignment: |
     Consul HCS and Vault should now be provisioned and accessible from the corresponding tabs.
 
     In this exercise we will gather the information required to connect to HCS and securely store this information in Vault.
@@ -576,7 +575,7 @@ challenges:
     type: service
     hostname: workstation
     path: /ui
-    port: 8080
+    port: 9090
   - title: Vault
     type: service
     hostname: workstation
@@ -661,6 +660,13 @@ challenges:
 
       [source](https://zkresearch.com/research/2017-application-delivery-controller-study)
   tabs:
+  - title: Current lab setup
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
+  - title: Terraform Code
+    type: code
+    hostname: workstation
+    path: /root/terraform/app
   - title: Cloud Consoles
     type: service
     hostname: workstation
@@ -688,13 +694,6 @@ challenges:
     hostname: workstation
     path: /
     port: 8500
-  - title: Current lab setup
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
-  - title: Terraform Code
-    type: code
-    hostname: workstation
-    path: /root/terraform/app
   difficulty: basic
   timelimit: 3000
-checksum: "14475470908593863484"
+checksum: "1413150568987970824"
