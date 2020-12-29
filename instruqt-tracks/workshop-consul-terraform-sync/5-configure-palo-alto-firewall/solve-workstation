@@ -1,30 +1,51 @@
 #!/bin/sh
-#
-# This is a sample solve script. Rename this file to solve-$CONTAINER
-# (where $container is the name of the container as defined in your config.yml),
-# and replace this content with your own script.
-#
-# This script will be run when you solve the challenge.
-#
-# Remember that the exit code is important. See the documentation
-# for more information.
-#
 
 echo ""
 echo ">>"
 echo ">> Configuring Palo Alto Firewall"
 echo ">>"
+echo ">> Sleeping 60 for bootup"
 
-#let it finish booting.
-sleep 30
+sleep 60
 
+echo ""
+echo ">>"
+echo ">> Probing Palo Alto Firewall API"
+echo ">>"
+
+# Block until PANOS API ready
+firewall_ip=$(terraform output -state /root/terraform/panw-vm/terraform.tfstate FirewallIP)
+pa_username=$(terraform output -state /root/terraform/panw-vm/terraform.tfstate pa_username)
+pa_password=$(terraform output -state /root/terraform/panw-vm/terraform.tfstate pa_password)
+
+while [ "$(curl -sk -o /dev/null  -u ${pa_username}:${pa_password} -w ''%{http_code}'' https://${firewall_ip}/restapi/v9.1/Device/VirtualSystems)" != "200" ]
+do
+    echo 'PANOS API not ready...'
+    sleep 5
+done
+
+# Applying Config
 cd /root/terraform/panw-config
 terraform apply -refresh=false -auto-approve > /root/terraform/panw-config/terraform.out
 
-sleep 10
+# Give the boot-up auto-commit plenty of time to finish, or it will fail
+sleep 120
 
-# Commit the changes
-/root/terraform/panos_commit/panos-commit -config /root/terraform/panos_commit/panos-commit.json
-sleep 10
+echo ""
+echo ">>"
+echo ">> Terraform Apply executed after API started responding..."
+echo ">>"
+echo ">> Running panos-commit now"
+echo ">>"
+
+/root/terraform/panos_commit/panos-commit -config /root/terraform/panos_commit/panos-commit.json -force > /root/terraform/panos_commit/panos-commit.log
+
+echo ""
+echo ">>"
+echo ">> 'panos-commit' complete..."
+echo ">>"
+echo ">>"
+
+cat /root/terraform/panos_commit/panos-commit.log
 
 exit 0

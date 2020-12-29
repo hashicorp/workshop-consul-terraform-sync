@@ -1,6 +1,12 @@
 #!/bin/sh
 #
 
+echo ""
+echo ""
+echo ">>-----------------------------<<"
+echo ">> Starting PANOS Config Setup <<"
+echo ">>-----------------------------<<"
+
 set-workdir /root/terraform/panw-config
 
 cd /root/terraform/bigip
@@ -27,5 +33,14 @@ cat << EOF > /root/terraform/panos_commit/panos-commit.json
     "sleep": 15
 }
 EOF
+
+# Needs a little bootup time before configuring.
+sleep 90
+
+echo ""
+echo ""
+echo ">>-----------------------------<<"
+echo ">> PANOS Config Setup Complete <<"
+echo ">>-----------------------------<<"
 
 exit 0

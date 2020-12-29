@@ -1,20 +1,34 @@
 #!/bin/bash
 
 echo ""
-echo ">>"
-echo ">> Deploying PANW FW VM"
-echo ">>"
+echo ""
+echo ">>--------------------------------<<"
+echo ">> Network Infra: Deploying PANOS <<"
+echo ">>--------------------------------<<"
 
 cd /root/terraform/panw-vm
 nohup terraform apply -auto-approve > /root/terraform/panw-vm/terraform.out &
 
 echo ""
-echo ">>"
-echo ">> Deploying BIG-IP VM"
-echo ">>"
+echo ""
+echo ">>-------------------------------<<"
+echo ">> Network Infra: PANOS Deployed <<"
+echo ">>-------------------------------<<"
+
+echo ""
+echo ""
+echo ">>---------------------------------<<"
+echo ">> Network Infra: Deploying BIG-IP <<"
+echo ">>---------------------------------<<"
 
 cd /root/terraform/bigip
 terraform apply -refresh=false -auto-approve > /root/terraform/bigip/terraform.out
+
+echo ""
+echo ""
+echo ">>--------------------------------<<"
+echo ">> Network Infra: BIG-IP Deployed <<"
+echo ">>--------------------------------<<"
 
 #block HCS
 while [ -f /root/terraform/hcs/.terraform.tfstate.lock.info ]; do echo 'HCS still provisioning'; sleep 5;  done
