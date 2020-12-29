@@ -8,8 +8,8 @@ curl --silent --remote-name https://releases.hashicorp.com/consul/1.8.0+ent/cons
 unzip consul_1.8.0+ent_linux_amd64.zip
 
 #Download Consul Terraform Sync
-curl --silent --remote-name https://releases.hashicorp.com/consul-terraform-sync/0.1.0-techpreview1/consul-terraform-sync_0.1.0-techpreview1_linux_amd64.zip
-unzip consul-terraform-sync_0.1.0-techpreview1_linux_amd64.zip
+curl --silent --remote-name https://releases.hashicorp.com/consul-terraform-sync/0.1.0-techpreview2/consul-terraform-sync_0.1.0-techpreview2_linux_amd64.zip
+unzip consul-terraform-sync_0.1.0-techpreview2_linux_amd64.zip
 
 #Install Consul
 sudo chown root:root consul
@@ -99,30 +99,20 @@ acl = {
 EOF
 
 cat << EOF > /etc/consul-tf-sync.d/consul-tf-sync.hcl
+# Global Config Options
 log_level = "info"
-consul {
-  address = "localhost:8500"
-  token = "${consul_token}"
-}
 buffer_period {
   min = "5s"
   max = "20s"
 }
-task {
-  name = "AS3-Fake-Service-Website"
-  description = "automate F5 BIG-IP Pool Members Ops for Fake Service Website"
-  source = "f5devcentral/app-consul-sync-nia/bigip"
-  providers = ["bigip"]
-  services = ["web", "app"]
+
+# Consul Config Options
+consul {
+  address = "localhost:8500"
+  token = "${consul_token}"
 }
-task {
-  name = "DAG_Web_App"
-  description = "Automate population of dynamic address group"
-  source = "PaloAltoNetworks/ag-dag-nia/panos"
-  providers = ["panos.panos1"]
-  services = ["web"]
-  variable_files = ["/etc/consul-tf-sync.d/panos.tfvars"]
-}
+
+# Terraform Driver Options 
 driver "terraform" {
   log = true
   path = "/opt/consul-tf-sync.d/"
@@ -136,17 +126,44 @@ driver "terraform" {
     }
   }
 }
-provider "bigip" {
+
+## Network Infrastructure Options
+
+# BIG-IP Workflow Options
+terraform_provider "bigip" {
   address = "${bigip_mgmt_addr}:8443"
   username = "${bigip_admin_user}"
   password = "${bigip_admin_passwd}"
 }
-provider "panos" {
+
+# Palo Alto Workflow Options
+terraform_provider "panos" {
   alias = "panos1"
   hostname = "${panos_mgmt_addr}"
 #  api_key  = "<api_key>"
   username = "${panos_username}"
   password = "${panos_password}"
+}
+
+## Consul Terraform Sync Task Definitions
+
+# Load-balancer operations task
+task {
+  name = "F5-BIG-IP-Load-Balanced-Web-Service"
+  description = "Automate F5 BIG-IP Pool Member Ops for Web Service"
+  source = "f5devcentral/app-consul-sync-nia/bigip"
+  providers = ["bigip"]
+  services = ["web", "app"]
+}
+
+# Firewall operations task
+task {
+  name = "DAG_Web_App"
+  description = "Automate population of dynamic address group"
+  source = "PaloAltoNetworks/ag-dag-nia/panos"
+  providers = ["panos.panos1"]
+  services = ["web"]
+  variable_files = ["/etc/consul-tf-sync.d/panos.tfvars"]
 }
 EOF
 
