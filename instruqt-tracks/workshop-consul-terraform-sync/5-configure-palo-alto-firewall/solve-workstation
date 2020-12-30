@@ -24,12 +24,12 @@ do
     sleep 5
 done
 
+# Give the boot-up auto-commit plenty of time to finish, or it will fail... trust me.
+sleep 240
+
 # Applying Config
 cd /root/terraform/panw-config
 terraform apply -refresh=false -auto-approve > /root/terraform/panw-config/terraform.out
-
-# Give the boot-up auto-commit plenty of time to finish, or it will fail
-sleep 120
 
 echo ""
 echo ">>"
@@ -38,14 +38,12 @@ echo ">>"
 echo ">> Running panos-commit now"
 echo ">>"
 
-/root/terraform/panos_commit/panos-commit -config /root/terraform/panos_commit/panos-commit.json -force > /root/terraform/panos_commit/panos-commit.log
+/root/terraform/panos_commit/panos-commit -config /root/terraform/panos_commit/panos-commit.json -force
 
 echo ""
 echo ">>"
 echo ">> 'panos-commit' complete..."
 echo ">>"
 echo ">>"
-
-cat /root/terraform/panos_commit/panos-commit.log
 
 exit 0

@@ -142,7 +142,7 @@ resource "panos_address_group" "cts-addr-grp-web" {
 
 resource "panos_nat_rule_group" "app" {
   rule {
-    name = "second"
+    name = "web_app"
     original_packet {
       source_zones          = ["Internet"]
       destination_zone      = "Internet"
