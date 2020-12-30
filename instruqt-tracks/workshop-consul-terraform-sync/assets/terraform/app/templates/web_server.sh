@@ -110,7 +110,7 @@ cat << EOF > /etc/consul.d/nginx.json
       {
         "AS3TMPL": "http",
         "VSIP": "${vip_internal_address}",
-        "VSPORT": "9090"
+        "VSPORT": "80"
       },
     "checks": [
       {
