@@ -19,7 +19,7 @@ resource "azurerm_network_interface" "cts-nic" {
 
     ip_configuration {
         name                          = "ctsNicConfiguration"
-        subnet_id                     = data.terraform_remote_state.vnet.outputs.app_subnet
+        subnet_id                     = data.terraform_remote_state.vnet.outputs.mgmt_subnet
         private_ip_address_allocation = "Dynamic"
     }
 
