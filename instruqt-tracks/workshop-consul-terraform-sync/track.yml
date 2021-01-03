@@ -220,10 +220,10 @@ challenges:
     type: code
     hostname: workstation
     path: /root/terraform/panw-config
-  - title: App Access Info
+  - title: Access Info
     type: code
     hostname: workstation
-    path: /info.txt
+    path: /access.md
   - title: Provision PANW
     type: website
     url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C5-Provision_PANW_FW.html
@@ -702,4 +702,4 @@ challenges:
     port: 8500
   difficulty: basic
   timelimit: 3000
-checksum: "15304424114045063231"
+checksum: "12540717320490632914"
