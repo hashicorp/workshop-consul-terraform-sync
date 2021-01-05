@@ -6,7 +6,7 @@ title: Network Infrastructure Automation
 teaser: Automate the provisioning and ongoing management of network infrastructure.
 description: In this workshop you'll learn how to automate the provisioning and management
   of traditional network infrastructure using Terraform, Consul, and Consul Terraform
-  Sync. Eliminate the exposre to operational and security risk while accelerating
+  Sync. Eliminate exposure to operational overhead and security risk while accelerating
   the deployment and scaling of applications and services.
 icon: https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/NIA-CTS-Icon.png
 tags:
@@ -606,4 +606,4 @@ challenges:
     port: 80
   difficulty: basic
   timelimit: 3000
-checksum: "16098663764815720206"
+checksum: "10524239465192180046"
