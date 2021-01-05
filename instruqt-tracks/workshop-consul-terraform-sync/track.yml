@@ -1,12 +1,13 @@
-slug: workshop-consul-terraform-sync
+slug: network-infrastructure-automation
 id: zd9iqr8wyub0
 version: 0.0.1
 type: track
-title: 'Workshop: Consul-Terraform-Sync'
-teaser: Use Terraform and Consul to manage day one and day two operations of F5 in
-  Azure
-description: Use Terraform, Consul, and Consul Terraform Sync to manage day one and
-  day two operations of F5 BIG-IPs and Palo Alto Firewalls in Azure.
+title: Network Infrastructure Automation
+teaser: Automate the provisioning and ongoing management of network infrastructure.
+description: In this workshop you'll learn how to automate the provisioning and management
+  of traditional network infrastructure using Terraform, Consul, and Consul Terraform
+  Sync. Eliminate the exposre to operational and security risk while accelerating
+  the deployment and scaling of applications and services.
 icon: ""
 tags:
 - consul
@@ -34,18 +35,15 @@ challenges:
     contents: Every journey begins with a single step! Step 1, review the environment
       Terraform is going to build for Consul Terraform Sync.
   tabs:
-  - title: NetOps - Traffic Flow
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/1.CTS_Workshop-NetOps-Traffic.html
   - title: NetOps - Operational Pattern
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/1.CTS_Workshop-NetOps.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/1.NIA-Workshop-NetOps.html
   - title: NIA - Operational Pattern
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/1.CTS_Workshop-NIA.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/1.NIA-Workshop-CTS.html
   - title: NIA - Traffic Flow
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/1.CTS_Workshop-NIA-Traffic.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/1.NIA-Workshop-CTS_Traffic.html
   difficulty: basic
   timelimit: 300
 - slug: 2-provision-azure-vnets
@@ -86,21 +84,21 @@ challenges:
       Setting up your environment... Your Azure account will be ready in ~5 minutes.
       Keep an eye on the bottom right corner to know when you can get started.
   tabs:
+  - title: Current lab setup
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/2.NIA-Workshop-VNETs.html
+  - title: Terraform Code
+    type: code
+    hostname: workstation
+    path: /root/terraform/vnet
+  - title: Shell
+    type: terminal
+    hostname: workstation
   - title: Cloud Consoles
     type: service
     hostname: workstation
     path: /
     port: 80
-  - title: Shell
-    type: terminal
-    hostname: workstation
-  - title: Text Editor
-    type: code
-    hostname: workstation
-    path: /root/terraform/vnet
-  - title: Current lab setup
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C2-Provision_VNETs.html
   difficulty: basic
   timelimit: 3000
 - slug: 3-provision-core-services
@@ -121,14 +119,9 @@ challenges:
     contents: |
       Terraform allows you to document, share, and deploy environments in one workflow by using Infrastructure as Code!
   tabs:
-  - title: Cloud Consoles
-    type: service
-    hostname: workstation
-    path: /
-    port: 80
-  - title: Shell
-    type: terminal
-    hostname: workstation
+  - title: Current lab setup
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/3.NIA-Workshop-Core_Svcs.html
   - title: Vault Terraform Code
     type: code
     hostname: workstation
@@ -137,9 +130,14 @@ challenges:
     type: code
     hostname: workstation
     path: /root/terraform/hcs
-  - title: Current lab setup
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C3-Provision_Core_Svcs.html
+  - title: Shell
+    type: terminal
+    hostname: workstation
+  - title: Cloud Consoles
+    type: service
+    hostname: workstation
+    path: /
+    port: 80
   difficulty: basic
   timelimit: 3000
 - slug: 4-provision-network-infra
@@ -167,14 +165,9 @@ challenges:
     contents: |
       In this exercise we will be provisioning an F5 BIG-IP Virtual Edition using Terraform.
   tabs:
-  - title: Cloud Consoles
-    type: service
-    hostname: workstation
-    path: /
-    port: 80
-  - title: Shell
-    type: terminal
-    hostname: workstation
+  - title: Current lab setup
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/4.NIA-Workshop-F5_PA.html
   - title: Terraform Code
     type: code
     hostname: workstation
@@ -183,9 +176,14 @@ challenges:
     type: code
     hostname: workstation
     path: /root/terraform/panw-vm
-  - title: Current lab setup
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C4-Provision_BIG-IP.html
+  - title: Shell
+    type: terminal
+    hostname: workstation
+  - title: Cloud Consoles
+    type: service
+    hostname: workstation
+    path: /
+    port: 80
   difficulty: basic
   timelimit: 3000
 - slug: 5-configure-palo-alto-firewall
@@ -208,25 +206,25 @@ challenges:
   - type: text
     contents: Replace this text with your own text
   tabs:
+  - title: Provision PANW
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/4.NIA-Workshop-F5_PA.html
+  - title: Terraform Code
+    type: code
+    hostname: workstation
+    path: /root/terraform/panw-config
+  - title: Shell
+    type: terminal
+    hostname: workstation
+  - title: Access Info
+    type: code
+    hostname: workstation
+    path: /access.md
   - title: Cloud Consoles
     type: service
     hostname: workstation
     path: /
     port: 80
-  - title: Shell
-    type: terminal
-    hostname: workstation
-  - title: Terraform Code
-    type: code
-    hostname: workstation
-    path: /root/terraform/panw-config
-  - title: Access Info
-    type: code
-    hostname: workstation
-    path: /access.md
-  - title: Provision PANW
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C5-Provision_PANW_FW.html
   difficulty: basic
   timelimit: 300
 - slug: 6-validate-hcs
@@ -317,11 +315,16 @@ challenges:
 
     You will use this role in a later assignment to configure access for Consul service consumers.
   tabs:
-  - title: Cloud Consoles
-    type: service
+  - title: Current lab setup
+    type: website
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/4.NIA-Workshop-F5_PA.html
+  - title: Terraform Code
+    type: code
     hostname: workstation
-    path: /
-    port: 80
+    path: /root/terraform/consul-tf-sync
+  - title: Shell
+    type: terminal
+    hostname: workstation
   - title: Consul
     type: service
     hostname: workstation
@@ -332,16 +335,11 @@ challenges:
     hostname: workstation
     path: /
     port: 8200
-  - title: Text Editor
-    type: code
+  - title: Cloud Consoles
+    type: service
     hostname: workstation
-    path: /root
-  - title: Shell
-    type: terminal
-    hostname: workstation
-  - title: Current lab setup
-    type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C5-Provision_PANW_FW.html
+    path: /
+    port: 80
   difficulty: basic
   timelimit: 3000
 - slug: 7-deploy-app-environments
@@ -371,11 +369,6 @@ challenges:
     contents: |
       For a lot of organizations digital transformation may start with a simple "lift and shift" to the cloud for existing workloads!
   tabs:
-  - title: Cloud Consoles
-    type: service
-    hostname: workstation
-    path: /
-    port: 80
   - title: Terraform Code
     type: code
     hostname: workstation
@@ -394,7 +387,7 @@ challenges:
     hostname: workstation
   - title: Current lab setup
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/CTS_Workshop_C7-Provision_App.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/workshop-consul-terraform-sync/main/instruqt-tracks/workshop-consul-terraform-sync/assets/images/7.NIA-Workshop-App_Deploy.html
   - title: Consul
     type: service
     hostname: workstation
@@ -405,6 +398,11 @@ challenges:
     hostname: workstation
     path: /ui
     port: 8080
+  - title: Cloud Consoles
+    type: service
+    hostname: workstation
+    path: /
+    port: 80
   difficulty: basic
   timelimit: 3000
 - slug: 8-install-consul-terraform-sync
@@ -454,7 +452,7 @@ challenges:
     path: /root/terraform/consul-tf-sync
   - title: Current lab setup
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/8.NIA-Workshop-CTS_Install.html
   - title: Consul
     type: service
     hostname: workstation
@@ -593,7 +591,7 @@ challenges:
     path: /root/terraform/app
   - title: Current lab setup
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/8.NIA-Workshop-CTS_Install.html
   difficulty: basic
   timelimit: 3000
 - slug: 10-scale-the-application
@@ -668,7 +666,7 @@ challenges:
   tabs:
   - title: Current lab setup
     type: website
-    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/final-architecture.html
+    url: https://htmlpreview.github.io/?https://raw.githubusercontent.com/hashicorp/field-workshops-consul/master/instruqt-tracks/f5-hashicorp-app-mod-tf-consul/assets/diagrams/10.NIA-Workshop-App_Scale.html
   - title: Terraform Code
     type: code
     hostname: workstation
@@ -702,4 +700,4 @@ challenges:
     port: 8500
   difficulty: basic
   timelimit: 3000
-checksum: "12540717320490632914"
+checksum: "7189326604754172027"
