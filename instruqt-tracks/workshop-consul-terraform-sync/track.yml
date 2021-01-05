@@ -26,14 +26,32 @@ challenges:
   type: challenge
   title: Review Lab Objectives
   teaser: Before we begin, lets quickly review the architecture.
-  assignment: |-
-    In the next few challenges we are going to provision resources to build the cloud environment for Consul Terraform Sync.
-
-    Once the environment has finished provisioning, you will install `consul-terraform-sync` and review its configuration and workflow.
+  assignment: "In this workshop we will build the infrastructure depicted in the in
+    the 'NIA - Traffic Flow' tab on the left, but before we do lets quickly review
+    the operational challenges we are going to address.\n\n**Navigate to the 'NetOps
+    - Operational Pattern' tab.**\n\nIn this diagram we have a two-tier application
+    running on virtual machines that is being delivered by Consul Service Discovery.
+    Not a complex use-case but a very common one. New virtual machins are frequently
+    added and removed to handle scaling requirements and to 'A/B test' new functionality.
+    These changes require frequent invovlement with the already overworked Net Operations
+    team who must adjust/update security and load-balancing configurations.\nThe long
+    hours and lengthy job queues results in deployment errors and, potnetially, security
+    issues.\n\n**Navigate to the 'NIA - Operational Pattern' tab.**\n\nWith `Consul`
+    providing real-time application state (IP Addresses and App meta-data), Consul
+    Terraform Sync uses that infromation, and its visibility of all application state
+    changes, to configure the network infrastructure eliminating the need for Network
+    Operations teams invovlement in Day 2 Ops.\n\n**Navigate to the 'NIA - Traffic
+    Flow' tab.**\n\nIn this diagram you can see the Traffic Flow of the infrastructure
+    we are going to build in the following steps. \n\nNOTE: A fine-grained policy
+    on the Palo Alto firewall is possible, without increasing operational overhead,
+    when Consul Terraform Sync is automating the management of the policy address
+    group.\n\nIn the next few challenges we are going to provision resources to build
+    the cloud environment depicted in this diagram enabling you to see this workflow
+    in operation."
   notes:
   - type: text
-    contents: Every journey begins with a single step! Step 1, review the environment
-      Terraform is going to build for Consul Terraform Sync.
+    contents: Every journey begins with a single step!\nStep 1, review the environment
+      you will build using Terraform, and manage using Consul Terraform Sync.
   tabs:
   - title: NetOps - Operational Pattern
     type: website
@@ -700,4 +718,4 @@ challenges:
     port: 8500
   difficulty: basic
   timelimit: 3000
-checksum: "7189326604754172027"
+checksum: "15773852524557930790"
