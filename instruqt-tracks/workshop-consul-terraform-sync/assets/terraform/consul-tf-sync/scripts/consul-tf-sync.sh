@@ -153,7 +153,7 @@ task {
   description = "Automate F5 BIG-IP Pool Member Ops for Web Service"
   source = "f5devcentral/app-consul-sync-nia/bigip"
   providers = ["bigip"]
-  services = ["web", "app"]
+  services = ["web"]
 }
 
 # Firewall operations task
