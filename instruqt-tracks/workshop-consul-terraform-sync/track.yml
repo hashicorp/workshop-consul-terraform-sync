@@ -473,7 +473,8 @@ challenges:
      **Deploy Consul Terraform Sync**
 
     Now its time to take care of all the Network Infrastructure operations with Consul Terraform Sync.
-     ```
+    ```
+    cd /root/terraform/consul-tf-sync/
     terraform plan
     terraform apply -auto-approve
     ```
@@ -606,4 +607,4 @@ challenges:
     port: 80
   difficulty: basic
   timelimit: 3000
-checksum: "10524239465192180046"
+checksum: "13906578888688012931"
